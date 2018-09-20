@@ -13,7 +13,7 @@ import java.sql.Statement;
 
 public class StatementVSPrepStatement {
 	private static final int N = 100;
-	private static final String QUERY = "SELECT * FROM COMPRAS WHERE numcochescomprados < 0";
+	private static final String QUERY = "SELECT * FROM TFacturas";
 	private String user;
 	private String password;
 	private String url;
@@ -83,6 +83,8 @@ public class StatementVSPrepStatement {
 				pst.executeQuery(query);
 			}
 		} catch (SQLException exc) {
+			System.out.println(exc.getErrorCode());
+			System.out.println(exc.getSQLState());
 			throw exc;
 		} finally {
 			pst.close();

@@ -1,3 +1,2 @@
-jdbc:oracle:thin:@156.35.94.99:1521:DESA
-UO258654
-57909795
+jdbc:hsqldb:hsql://localhost
+sa
