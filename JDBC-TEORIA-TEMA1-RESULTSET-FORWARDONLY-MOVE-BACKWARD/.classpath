@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="D:/Archivos/Universidad/Tercero/Respositorios de la informacion/information_repositories/JDBC-TEORIA-TEMA1-RESULTSET-FORWARDONLY-MOVE-BACKWARD/lib/c3p0-0.9.5.1.jar"/>
+	<classpathentry kind="lib" path="D:/Archivos/Universidad/Tercero/Respositorios de la informacion/information_repositories/JDBC-TEORIA-TEMA1-RESULTSET-FORWARDONLY-MOVE-BACKWARD/lib/hsqldb.jar"/>
+	<classpathentry kind="lib" path="D:/Archivos/Universidad/Tercero/Respositorios de la informacion/information_repositories/JDBC-TEORIA-TEMA1-RESULTSET-FORWARDONLY-MOVE-BACKWARD/lib/mchange-commons-java-0.2.10.jar"/>
+	<classpathentry kind="lib" path="D:/Archivos/Universidad/Tercero/Respositorios de la informacion/information_repositories/JDBC-TEORIA-TEMA1-RESULTSET-FORWARDONLY-MOVE-BACKWARD/lib/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="D:/Archivos/Universidad/Tercero/Respositorios de la informacion/information_repositories/JDBC-TEORIA-TEMA1-RESULTSET-FORWARDONLY-MOVE-BACKWARD/lib/ojdbc8.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
