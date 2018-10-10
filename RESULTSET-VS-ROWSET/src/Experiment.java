@@ -42,16 +42,16 @@ public class Experiment {
 			printResult(rws);
 			
 			System.out.println("******CHANGING ROW  ONE, COL3 TO 0*******");
-//			rs.absolute(1);
-//			rs.updateInt("COL3", 0);
-//			rs.updateRow();
-//			rs.moveToCurrentRow();
-//			rws.absolute(1);
-//			rws.updateInt("COL3", 0);
-//			rws.updateRow();
-//			rws.moveToCurrentRow();
-//			printResult(rs);
-//			printResult(rws);
+			rs.absolute(1);
+			rs.updateInt("COL3", 0);
+			rs.updateRow();
+			rs.moveToCurrentRow();
+			rws.absolute(1);
+			rws.updateInt("COL3", 0);
+			rws.updateRow();
+			rws.moveToCurrentRow();
+			printResult(rs);
+			printResult(rws);
 			
 			System.out.println("******INSERTING A NEW ROW*******");
 			rs.moveToInsertRow();
