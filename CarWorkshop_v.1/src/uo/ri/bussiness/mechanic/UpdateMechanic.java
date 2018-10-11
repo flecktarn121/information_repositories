@@ -1,14 +1,9 @@
 package uo.ri.bussiness.mechanic;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
-import alb.util.jdbc.Jdbc;
+import uo.ri.bussiness.dto.MechanicDTO;
+import uo.ri.configuration.PersistenceFactory;
 
 public class UpdateMechanic {
-	private static String SQL = "update TMecanicos " + "set nombre = ?, apellidos = ? " + "where id = ?";
-
 	private String nombre;
 	private String apellidos;
 	public long id;
@@ -20,17 +15,10 @@ public class UpdateMechanic {
 	}
 
 	public void execute() {
-
-		try (Connection c = Jdbc.getConnection(); PreparedStatement pst = c.prepareStatement(SQL);) {
-
-			pst.setString(1, nombre);
-			pst.setString(2, apellidos);
-			pst.setLong(3, id);
-
-			pst.executeUpdate();
-
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
+		MechanicDTO dto = new MechanicDTO();
+		dto.id = id;
+		dto.name = nombre;
+		dto.surname = apellidos;
+		PersistenceFactory.getMechanicGateway().update(dto);
 	}
 }

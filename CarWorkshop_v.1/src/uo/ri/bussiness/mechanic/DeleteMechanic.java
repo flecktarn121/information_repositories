@@ -1,14 +1,9 @@
 package uo.ri.bussiness.mechanic;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import uo.ri.bussiness.dto.MechanicDTO;
+import uo.ri.configuration.PersistenceFactory;
 
-import alb.util.jdbc.Jdbc;
-
-public class DeleteMechanic {
-	private static String SQL = "delete from TMecanicos where id = ?";
-	
+public class DeleteMechanic {	
 	private Long idMecanico;
 
 	public DeleteMechanic(Long idMecanico) {
@@ -16,13 +11,8 @@ public class DeleteMechanic {
 	}
 
 	public void execute() {
-		try (Connection c = Jdbc.getConnection(); PreparedStatement pst = c.prepareStatement(SQL);) {
-			pst.setLong(1, idMecanico);
-
-			pst.executeUpdate();
-
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
+		MechanicDTO dto = new MechanicDTO();
+		dto.id = idMecanico;
+		PersistenceFactory.getMechanicGateway().delete(dto);
 	}
 }

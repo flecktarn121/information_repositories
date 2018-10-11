@@ -1,5 +1,7 @@
 package uo.ri.bussiness.serviceLayer;
 
-public interface IInvoiceService {
+import uo.ri.bussiness.dto.InvoiceDTO;
 
+public interface IInvoiceService {
+	public void facturarResparacion();
 }
