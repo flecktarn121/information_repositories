@@ -9,14 +9,16 @@ import java.util.List;
 
 import alb.util.jdbc.Jdbc;
 import uo.ri.bussiness.dto.MechanicDTO;
+import uo.ri.configuration.Configuration;
 import uo.ri.persistencia.MechanicGateway;
 
 public class MechanicGatewayImpl implements MechanicGateway {
+	Configuration config = Configuration.getInstance();
 
 	@Override
 	public void create(MechanicDTO dto) {
-		String SQL = "insert into TMecanicos(dni, nombre, apellidos) values (?, ?, ?)";
-		try (Connection c = Jdbc.getConnection(); PreparedStatement pst = c.prepareStatement(SQL);) {
+		try (Connection c = Jdbc.getConnection();
+				PreparedStatement pst = c.prepareStatement(config.getProperty("SQL_INSERT_MECANICO"));) {
 
 			pst.setString(1, dto.dni);
 			pst.setString(2, dto.name);
@@ -32,11 +34,10 @@ public class MechanicGatewayImpl implements MechanicGateway {
 
 	@Override
 	public List<MechanicDTO> read() {
-		String SQL = "select id, dni, nombre, apellidos from TMecanicos";
 		List<MechanicDTO> mechanics = new ArrayList<MechanicDTO>();
 		MechanicDTO mechanic;
 		try (Connection c = Jdbc.getConnection();
-				PreparedStatement pst = c.prepareStatement(SQL);
+				PreparedStatement pst = c.prepareStatement(config.getProperty("SQL_LISTAR_MECANICOS"));
 				ResultSet rs = pst.executeQuery();) {
 
 			while (rs.next()) {
@@ -58,8 +59,8 @@ public class MechanicGatewayImpl implements MechanicGateway {
 
 	@Override
 	public void update(MechanicDTO dto) {
-		String SQL = "update TMecanicos " + "set nombre = ?, apellidos = ? " + "where id = ?";
-		try (Connection c = Jdbc.getConnection(); PreparedStatement pst = c.prepareStatement(SQL);) {
+		try (Connection c = Jdbc.getConnection();
+				PreparedStatement pst = c.prepareStatement(config.getProperty("SQL_UPDATE_MECANICO"));) {
 
 			pst.setString(1, dto.name);
 			pst.setString(2, dto.surname);
@@ -75,8 +76,8 @@ public class MechanicGatewayImpl implements MechanicGateway {
 
 	@Override
 	public void delete(MechanicDTO dto) {
-		String SQL = "delete from TMecanicos where id = ?";
-		try (Connection c = Jdbc.getConnection(); PreparedStatement pst = c.prepareStatement(SQL);) {
+		try (Connection c = Jdbc.getConnection();
+				PreparedStatement pst = c.prepareStatement(config.getProperty("SQL_DELETE_MECANICOS"));) {
 			pst.setLong(1, dto.id);
 
 			pst.executeUpdate();
