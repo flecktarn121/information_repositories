@@ -33,6 +33,18 @@ public class Association {
 	}
 
 	public static class Pagar {
+
+		public static void link(Cliente cliente, MedioPago medio) {
+			medio._setCliente(cliente);
+			cliente._getMediosDePago().add(medio);
+
+		}
+
+		public static void unlink(Cliente cliente, MedioPago medio) {
+			cliente._getMediosDePago().remove(medio);
+			medio._setCliente(null);
+
+		}
 	}
 
 	public static class Averiar {
@@ -65,6 +77,22 @@ public class Association {
 	}
 
 	public static class Cargar {
+
+		public static void link(MedioPago medio, Cargo cargo, Factura factura) {
+			cargo._setFactura(factura);
+			cargo._setMedioPago(medio);
+			medio._getCargos().add(cargo);
+			factura._getCargos().add(cargo);
+
+		}
+
+		public static void unlink(MedioPago medio, Cargo cargo, Factura factura) {
+			medio._getCargos().remove(cargo);
+			factura._getCargos().remove(cargo);
+			cargo._setFactura(null);
+			cargo._setMedioPago(null);
+
+		}
 	}
 
 	public static class Asignar {

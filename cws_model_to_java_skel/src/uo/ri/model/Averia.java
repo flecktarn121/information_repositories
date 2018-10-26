@@ -16,7 +16,7 @@ public class Averia {
 	private Vehiculo vehiculo;
 	private Factura factura;
 	private Mecanico mecanico;
-	
+
 	private Set<Intervencion> intervenciones = new HashSet<Intervencion>();
 
 	public Averia(Vehiculo vehiculo) {
@@ -127,11 +127,15 @@ public class Averia {
 	}
 
 	public Set<Intervencion> getIntervenciones() {
-		return new HashSet<Intervencion>( intervenciones);
+		return new HashSet<Intervencion>(intervenciones);
 	}
 
 	Set<Intervencion> _getIntervenciones() {
 		return intervenciones;
+	}
+
+	public Vehiculo getVehiculo() {
+		return vehiculo;
 	}
 
 }

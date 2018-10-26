@@ -15,6 +15,7 @@ public class Cliente {
 	private Address address;
 
 	private Set<Vehiculo> vehiculos = new HashSet<Vehiculo>();
+	private Set<MedioPago> mediosDePago = new HashSet<MedioPago>();
 
 	public Cliente(String dni) {
 		this.dni = dni;
@@ -88,6 +89,19 @@ public class Cliente {
 
 	Set<Vehiculo> _getVehiculos() {
 		return vehiculos;
+	}
+
+	public Set<MedioPago> getMediosDePago() {
+		return new HashSet<MedioPago>(mediosDePago);
+	}
+
+	Set<MedioPago> _getMediosDePago() {
+		return mediosDePago;
+	}
+
+	public Set<MedioPago> getMediosPago() {
+
+		return new HashSet<MedioPago>(mediosDePago);
 	}
 
 }

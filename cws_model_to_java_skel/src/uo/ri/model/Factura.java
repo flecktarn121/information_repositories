@@ -15,6 +15,16 @@ public class Factura {
 	private FacturaStatus status = FacturaStatus.SIN_ABONAR;
 
 	private Set<Averia> averias = new HashSet<Averia>();
+	private Set<Cargo> cargos = new HashSet<Cargo>();
+
+	public Factura(long l, Date today) {
+		this(l);
+		fecha = new Date(today.getTime());
+	}
+
+	public Factura(long numero) {
+		this.numero = numero;
+	}
 
 	/**
 	 * Añade la averia a la factura y actualiza el importe e iva de la factura
@@ -74,6 +84,34 @@ public class Factura {
 
 	Set<Averia> _getAverias() {
 		return averias;
+	}
+
+	public Set<Cargo> getCargos() {
+		return new HashSet<Cargo>(cargos);
+	}
+
+	Set<Cargo> _getCargos() {
+		return cargos;
+	}
+
+	public Long getNumero() {
+		return numero;
+	}
+
+	public Date getFecha() {
+		return new Date(fecha.getTime());
+	}
+
+	public double getImporte() {
+		return importe;
+	}
+
+	public double getIva() {
+		return iva;
+	}
+
+	public FacturaStatus getStatus() {
+		return status;
 	}
 
 }
