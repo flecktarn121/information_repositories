@@ -1,23 +1,40 @@
 package uo.ri.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Mecanico {
 
 	private String dni;
 	private String apellidos;
 	private String nombre;
+
+	private Set<Averia> averias = new HashSet<Averia>();
+	private Set<Intervencion> intervenciones = new HashSet<Intervencion>();
+
 	public Mecanico(String dni) {
 		super();
 		this.dni = dni;
 	}
+
+	public Mecanico(String dni, String nombre, String apellidos) {
+		this(dni);
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+	}
+
 	public String getDni() {
 		return dni;
 	}
+
 	public String getApellidos() {
 		return apellidos;
 	}
+
 	public String getNombre() {
 		return nombre;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -25,6 +42,7 @@ public class Mecanico {
 		result = prime * result + ((dni == null) ? 0 : dni.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -41,9 +59,30 @@ public class Mecanico {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "Mecanico [dni=" + dni + ", apellidos=" + apellidos + ", nombre=" + nombre + "]";
 	}
-	
+
+	public Set<Averia> getAverias() {
+		return new HashSet<Averia>(averias);
+	}
+
+	Set<Averia> _getAverias() {
+		return averias;
+	}
+
+	public Set<Averia> getAsignadas() {
+		return getAverias();
+	}
+
+	public Set<Intervencion> getIntervenciones() {
+		return new HashSet<Intervencion>(intervenciones);
+	}
+
+	Set<Intervencion> _getIntervenciones() {
+		return intervenciones;
+	}
+
 }

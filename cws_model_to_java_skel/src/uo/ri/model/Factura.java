@@ -1,6 +1,8 @@
 package uo.ri.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import uo.ri.model.types.FacturaStatus;
 
@@ -11,12 +13,16 @@ public class Factura {
 	private double importe;
 	private double iva;
 	private FacturaStatus status = FacturaStatus.SIN_ABONAR;
-	
+
+	private Set<Averia> averias = new HashSet<Averia>();
+
 	/**
 	 * Añade la averia a la factura y actualiza el importe e iva de la factura
+	 * 
 	 * @param averia
 	 * @see Diagramas de estados en el enunciado de referencia
-	 * @throws IllegalStateException si la factura no está en estado SIN_ABONAR
+	 * @throws IllegalStateException
+	 *             si la factura no está en estado SIN_ABONAR
 	 */
 	public void addAveria(Averia averia) {
 		// Verificar que la factura está en estado SIN_ABONAR
@@ -27,7 +33,7 @@ public class Factura {
 	}
 
 	/**
-	 * Calcula el importe de la avería y su IVA, teniendo en cuenta la fecha de 
+	 * Calcula el importe de la avería y su IVA, teniendo en cuenta la fecha de
 	 * factura
 	 */
 	void calcularImporte() {
@@ -36,11 +42,13 @@ public class Factura {
 	}
 
 	/**
-	 * Elimina una averia de la factura, solo si está SIN_ABONAR y recalcula 
-	 * el importe
+	 * Elimina una averia de la factura, solo si está SIN_ABONAR y recalcula el
+	 * importe
+	 * 
 	 * @param averia
 	 * @see Diagramas de estados en el enunciado de referencia
-	 * @throws IllegalStateException si la factura no está en estado SIN_ABONAR
+	 * @throws IllegalStateException
+	 *             si la factura no está en estado SIN_ABONAR
 	 */
 	public void removeAveria(Averia averia) {
 		// verificar que la factura está sin abonar
@@ -51,13 +59,21 @@ public class Factura {
 
 	/**
 	 * Marks the invoice as ABONADA, but
+	 * 
 	 * @see Diagramas de estados en el enunciado de referencia
-	 * @throws IllegalStateException if
-	 * 	- Is already settled, or 
-	 *  - the amounts paid with charges to payment means does not cover 
-	 *  	the total of the invoice  
+	 * @throws IllegalStateException
+	 *             if - Is already settled, or - the amounts paid with charges to
+	 *             payment means does not cover the total of the invoice
 	 */
 	public void settle() {
+	}
+
+	public Set<Averia> getAverias() {
+		return new HashSet<Averia>(averias);
+	}
+
+	Set<Averia> _getAverias() {
+		return averias;
 	}
 
 }

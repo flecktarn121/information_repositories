@@ -1,5 +1,8 @@
 package uo.ri.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Vehiculo {
 
 	private String marca;
@@ -9,6 +12,9 @@ public class Vehiculo {
 	private int numAverias = 0;
 
 	private Cliente cliente;
+	
+	private TipoVehiculo tipo;
+	private Set<Averia> averias = new HashSet<Averia>();
 
 	public Vehiculo(String matricula) {
 		this.matricula = matricula;
@@ -73,5 +79,21 @@ public class Vehiculo {
 
 	void _setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public TipoVehiculo getTipo() {
+		return tipo;
+	}
+
+	void _setTipo(TipoVehiculo tipo) {
+		this.tipo = tipo;
+	}
+
+	public Set<Averia> getAverias() {
+		return new HashSet<Averia>( averias);
+	}
+	
+	Set<Averia> _getAverias() {
+		return averias;
 	}
 }

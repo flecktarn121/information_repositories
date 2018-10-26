@@ -1,12 +1,22 @@
 package uo.ri.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class TipoVehiculo {
 	private String nombre;
 	private double precioHora;
 
+	private Set<Vehiculo> vehiculos = new HashSet<Vehiculo>();
+
 	public TipoVehiculo(String nombre) {
 		super();
 		this.nombre = nombre;
+	}
+
+	public TipoVehiculo(String nombre, double precioHora) {
+		this(nombre);
+		this.precioHora = precioHora;
 	}
 
 	public String getNombre() {
@@ -46,4 +56,13 @@ public class TipoVehiculo {
 	public String toString() {
 		return "TipoVehiculo [nombre=" + nombre + ", precioHora=" + precioHora + "]";
 	}
+
+	public Set<Vehiculo> getVehiculos() {
+		return new HashSet<Vehiculo>(vehiculos);
+	}
+
+	Set<Vehiculo> _getVehiculos() {
+		return vehiculos;
+	}
+
 }
