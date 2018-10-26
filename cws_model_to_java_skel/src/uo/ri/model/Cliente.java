@@ -1,18 +1,29 @@
 package uo.ri.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import uo.ri.model.types.Address;
 
 public class Cliente {
-	
+
 	private String dni;
 	private String nombre;
 	private String apellidos;
 	private String email;
 	private String phone;
 	private Address address;
-	
+
+	private Set<Vehiculo> vehiculos = new HashSet<Vehiculo>();
+
 	public Cliente(String dni) {
-		this.dni=dni;
+		this.dni = dni;
+	}
+
+	public Cliente(String dni, String nombre, String apellidos) {
+		this(dni);
+		this.nombre = nombre;
+		this.apellidos = apellidos;
 	}
 
 	public String getDni() {
@@ -23,26 +34,22 @@ public class Cliente {
 		return nombre;
 	}
 
-
 	public String getApellidos() {
 		return apellidos;
-	
+
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-
 	public String getPhone() {
 		return phone;
 	}
 
-
 	public Address getAddress() {
 		return address;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -74,6 +81,13 @@ public class Cliente {
 		return "Cliente [dni=" + dni + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email
 				+ ", phone=" + phone + ", address=" + address + "]";
 	}
-	
-}
 
+	public Set<Vehiculo> getVehiculos() {
+		return new HashSet<Vehiculo>(_getVehiculos());
+	}
+
+	Set<Vehiculo> _getVehiculos() {
+		return vehiculos;
+	}
+
+}

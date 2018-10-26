@@ -1,15 +1,23 @@
 package uo.ri.model;
 
 public class Vehiculo {
-	
+
 	private String marca;
 	private String matricula;
 	private String modelo;
-	
+
 	private int numAverias = 0;
-	
+
+	private Cliente cliente;
+
 	public Vehiculo(String matricula) {
-		this.matricula=matricula;
+		this.matricula = matricula;
+	}
+
+	public Vehiculo(String matricula, String marca, String modelo) {
+		this(matricula);
+		this.marca = marca;
+		this.modelo = modelo;
 	}
 
 	public String getMarca() {
@@ -57,5 +65,13 @@ public class Vehiculo {
 	public String toString() {
 		return "Vehiculo [marca=" + marca + ", matricula=" + matricula + ", modelo=" + modelo + ", numAverias="
 				+ numAverias + "]";
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	void _setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 }
