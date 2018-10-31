@@ -96,4 +96,8 @@ public class Vehiculo {
 	Set<Averia> _getAverias() {
 		return averias;
 	}
+	
+	void incrementarNumAverias() {
+		this.numAverias++;
+	}
 }

@@ -1,5 +1,9 @@
 package uo.ri.model;
 
+import java.util.Set;
+
+import uo.ri.model.types.AveriaStatus;
+
 public class Association {
 
 	public static class Poseer {
@@ -52,6 +56,7 @@ public class Association {
 		public static void link(Vehiculo vehiculo, Averia averia) {
 			averia._setVehiculo(vehiculo);
 			vehiculo._getAverias().add(averia);
+			vehiculo.incrementarNumAverias();
 
 		}
 
@@ -67,6 +72,7 @@ public class Association {
 		public static void link(Factura factura, Averia averia) {
 			averia._setFactura(factura);
 			factura._getAverias().add(averia);
+			averia.setStatus(AveriaStatus.FACTURADA);
 
 		}
 
@@ -92,6 +98,13 @@ public class Association {
 			cargo._setFactura(null);
 			cargo._setMedioPago(null);
 
+		}
+
+		public static void unlink(Cargo cargo) {
+			cargo.getMedioPago()._getCargos().remove(cargo);
+			cargo.getFactura()._getCargos().remove(cargo);
+			cargo._setFactura(null);
+			cargo._setMedioPago(null);
 		}
 	}
 
@@ -133,6 +146,14 @@ public class Association {
 	}
 
 	public static class Sustituir {
+
+		public static void unlink(Sustitucion sustitucion) {
+			sustitucion.getIntervencion()._getSustituciones().remove(sustitucion);
+			sustitucion.getRepuesto()._getSustituciones().remove(sustitucion);
+			sustitucion.setIntervencion(null);
+			sustitucion.setRepuesto(null);
+			
+		}
 	}
 
 }

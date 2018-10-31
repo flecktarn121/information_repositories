@@ -1,9 +1,13 @@
 package uo.ri.model;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import uo.ri.model.types.AveriaStatus;
 import uo.ri.model.types.FacturaStatus;
 
 public class Factura {
@@ -26,6 +30,22 @@ public class Factura {
 		this.numero = numero;
 	}
 
+	public Factura(long numero, List<Averia> averias) {
+		this.numero = numero;
+		this.comprobarAverias(averias);
+		this.averias = new HashSet<Averia>(averias);
+		this.status = FacturaStatus.SIN_ABONAR;
+	}
+
+	private void comprobarAverias(List<Averia> averias2) {
+		averias.parallelStream().forEach((averia) -> {
+			if (!averia.getStatus().equals(AveriaStatus.TERMINADA)) {
+				throw new IllegalStateException("Una de las averías no está cerrada.");
+			}
+		});
+
+	}
+
 	/**
 	 * Añade la averia a la factura y actualiza el importe e iva de la factura
 	 * 
@@ -35,11 +55,14 @@ public class Factura {
 	 *             si la factura no está en estado SIN_ABONAR
 	 */
 	public void addAveria(Averia averia) {
-		// Verificar que la factura está en estado SIN_ABONAR
-		// Verificar que La averia está TERMINADA
-		// linkar factura y averia
-		// marcar la averia como FACTURADA ( averia.markAsInvoiced() )
-		// calcular el importe
+		if (!this.status.equals(FacturaStatus.SIN_ABONAR)) {
+			throw new IllegalStateException("La factura ya está abonada");
+		}
+		if (!averia.getStatus().equals(AveriaStatus.TERMINADA)) {
+			throw new IllegalStateException("La avería aún no está terminada.");
+		}
+		Association.Facturar.link(this, averia);
+		this.calcularImporte();
 	}
 
 	/**
@@ -47,8 +70,15 @@ public class Factura {
 	 * factura
 	 */
 	void calcularImporte() {
-		// iva = ...
-		// importe = ...
+		this.importe = averias.parallelStream().map(Averia::getImporte).reduce(0.0, ((a, b) -> a + b));
+
+		Date antesRajoy = new GregorianCalendar(2012, Calendar.JULY, 1).getTime();
+
+		if (!new Date().equals(antesRajoy)) {
+			this.iva = 0.18;
+		} else {
+			this.iva = 0.21;
+		}
 	}
 
 	/**
@@ -76,6 +106,18 @@ public class Factura {
 	 *             payment means does not cover the total of the invoice
 	 */
 	public void settle() {
+		if (status.equals(FacturaStatus.ABONADA)) {
+			throw new IllegalStateException("La factura ya está abonada.");
+		} else if (this.sumarCargos() != importe) {
+			throw new IllegalStateException("Los pagos hehcos no cubren el total del importe de la factura.");
+		} else {
+			this.status = FacturaStatus.ABONADA;
+		}
+	}
+
+	private double sumarCargos() {
+
+		return this.cargos.parallelStream().map(Cargo::getImporte).reduce(0.0, ((a, b) -> a + b));
 	}
 
 	public Set<Averia> getAverias() {

@@ -41,6 +41,10 @@ public class Cargo {
 	void _setMedioPago(MedioPago medioPago) {
 		this.medioPago = medioPago;
 	}
+	
+	public double getImporte() {
+		return this.importe;
+	}
 
 	@Override
 	public int hashCode() {

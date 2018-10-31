@@ -1,10 +1,15 @@
 package uo.ri.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Intervencion {
 
 	private Averia averia;
 	private Mecanico mecanico;
 	private int minutos;
+	
+	private Set<Sustitucion> sustituciones; 
 
 	public Intervencion(Mecanico mecanico, Averia averia) {
 		super();
@@ -74,4 +79,16 @@ public class Intervencion {
 
 	}
 
+	public Set<Sustitucion> getSustituciones() {
+		return new HashSet<Sustitucion>(sustituciones);
+	}
+
+	Set<Sustitucion> _getSustituciones() {
+		return sustituciones;
+	}
+	
+	public double getImporte() {
+		return (minutos*(averia.getVehiculo().getTipo().getPrecioHora()/60)) +
+				(sustituciones.parallelStream().map(Sustitucion::getImporte).reduce(0.0, ((a, b)->a+b)));
+	}
 }

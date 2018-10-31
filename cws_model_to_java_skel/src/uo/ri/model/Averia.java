@@ -93,6 +93,13 @@ public class Averia {
 	 *             enlazada con una factura
 	 */
 	public void markAsInvoiced() {
+		if (factura == null) {
+			throw new IllegalStateException("Esta avería no tiene factura asignada.");
+		} else if (this.status.equals(AveriaStatus.TERMINADA)) {
+			throw new IllegalStateException("Esta avería no está terminada.");
+		} else {
+			this.status = AveriaStatus.FACTURADA;
+		}
 	}
 
 	/**
@@ -103,6 +110,10 @@ public class Averia {
 	 *             si - La averia no está en estado ASIGNADA, o
 	 */
 	public void desassign() {
+	}
+
+	public AveriaStatus getStatus() {
+		return status;
 	}
 
 	public void _setVehiculo(Vehiculo vehiculo) {
@@ -136,6 +147,20 @@ public class Averia {
 
 	public Vehiculo getVehiculo() {
 		return vehiculo;
+	}
+
+	public double getImporte() {
+
+		return intervenciones.parallelStream().map(Intervencion::getImporte).reduce(0.0, ((acc, pasta) -> acc + pasta));
+
+	}
+
+	public Date getFecha() {
+		return (Date) fecha.clone();
+	}
+
+	void setStatus(AveriaStatus status) {
+		this.status = status;
 	}
 
 }
