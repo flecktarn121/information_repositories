@@ -1,14 +1,32 @@
 package uo.ri.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="TBONOS")
 public class Bono extends MedioPago {
 
 	private String codigo;
 	private double disponible = 0.0;
 	private String descripcion;
 
+	Bono() {
+
+	}
+
 	public Bono(String codigo) {
 		super();
 		this.codigo = codigo;
+	}
+
+	public Bono(String string, double d, String string2) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Bono(String codigo, double disponible) {
+		this.codigo = codigo;
+		this.disponible = disponible;
 	}
 
 	public String getCodigo() {
@@ -52,6 +70,11 @@ public class Bono extends MedioPago {
 	public String toString() {
 		return "Bono [codigo=" + codigo + ", disponible=" + disponible + ", descripcion=" + descripcion
 				+ ", toString()=" + super.toString() + "]";
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+
 	}
 
 }

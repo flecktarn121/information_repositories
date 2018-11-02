@@ -3,19 +3,34 @@ package uo.ri.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+@Entity
+@Table(name="TVEHICULOS")
 public class Vehiculo {
-
-	private String marca;
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)private Long id;
+	@Column(unique = true) private String marca;
 	private String matricula;
 	private String modelo;
 
-	private int numAverias = 0;
+	@Column(name="NUM_AVERIAS")private int numAverias = 0;
 
-	private Cliente cliente;
+	@ManyToOne private Cliente cliente;
+
+	@ManyToOne private TipoVehiculo tipo;
+	@OneToMany(mappedBy="vehiculo") private Set<Averia> averias = new HashSet<Averia>();
+
+	 Vehiculo() {
+		
+	}
 	
-	private TipoVehiculo tipo;
-	private Set<Averia> averias = new HashSet<Averia>();
-
 	public Vehiculo(String matricula) {
 		this.matricula = matricula;
 	}
@@ -39,6 +54,7 @@ public class Vehiculo {
 	}
 
 	public int getNumAverias() {
+		numAverias = averias.size();
 		return numAverias;
 	}
 
@@ -90,14 +106,18 @@ public class Vehiculo {
 	}
 
 	public Set<Averia> getAverias() {
-		return new HashSet<Averia>( averias);
+		return new HashSet<Averia>(averias);
 	}
-	
+
 	Set<Averia> _getAverias() {
 		return averias;
 	}
-	
+
 	void incrementarNumAverias() {
 		this.numAverias++;
+	}
+
+	public Long getId() {
+		return id;
 	}
 }

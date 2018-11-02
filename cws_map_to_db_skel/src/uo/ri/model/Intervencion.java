@@ -3,13 +3,33 @@ package uo.ri.model;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Intervencion {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
+@Entity
+@Table(name="TINTERVENCIONES",uniqueConstraints = { @UniqueConstraint(columnNames = { "AVERIA_ID", "mEeCaNico_id" }) })
+public class Intervencion {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@ManyToOne
 	private Averia averia;
+	@ManyToOne
 	private Mecanico mecanico;
 	private int minutos;
-	
-	private Set<Sustitucion> sustituciones; 
+
+	@OneToMany(mappedBy = "intervencion")
+	private Set<Sustitucion> sustituciones;
+
+	Intervencion() {
+
+	}
 
 	public Intervencion(Mecanico mecanico, Averia averia) {
 		super();
@@ -86,9 +106,13 @@ public class Intervencion {
 	Set<Sustitucion> _getSustituciones() {
 		return sustituciones;
 	}
-	
+
 	public double getImporte() {
-		return (minutos*(averia.getVehiculo().getTipo().getPrecioHora()/60)) +
-				(sustituciones.parallelStream().map(Sustitucion::getImporte).reduce(0.0, ((a, b)->a+b)));
+		return (minutos * (averia.getVehiculo().getTipo().getPrecioHora() / 60))
+				+ (sustituciones.parallelStream().map(Sustitucion::getImporte).reduce(0.0, ((a, b) -> a + b)));
+	}
+
+	public Long getId() {
+		return id;
 	}
 }

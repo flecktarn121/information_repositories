@@ -2,15 +2,28 @@ package uo.ri.model;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
 public class TarjetaCredito extends MedioPago {
 
 	protected String numero;
 	protected String tipo;
-	protected Date validez;
+	@Temporal(TemporalType.DATE) protected Date validez;
+
+	TarjetaCredito() {
+
+	}
 
 	public TarjetaCredito(String numero) {
 		super();
 		this.numero = numero;
+	}
+
+	public TarjetaCredito(String string, String string2, Date tomorrow) {
+		// TODO Auto-generated constructor stub
 	}
 
 	public String getNumero() {

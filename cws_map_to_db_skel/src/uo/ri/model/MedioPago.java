@@ -3,10 +3,28 @@ package uo.ri.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="TMEDIOSPAGO")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class MedioPago {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	protected double acumulado = 0.0;
+	@ManyToOne
 	protected Cliente cliente;
+	@OneToMany(mappedBy="medioPago")
 	private Set<Cargo> cargos = new HashSet<Cargo>();
 
 	public void pagar(double importe) {
@@ -57,6 +75,10 @@ public abstract class MedioPago {
 
 	Set<Cargo> _getCargos() {
 		return cargos;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 }

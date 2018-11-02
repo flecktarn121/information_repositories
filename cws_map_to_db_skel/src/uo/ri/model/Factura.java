@@ -7,19 +7,41 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
 import uo.ri.model.types.AveriaStatus;
 import uo.ri.model.types.FacturaStatus;
 
+@Entity
+@Table(name="TFACTURAS")
 public class Factura {
-
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private Long numero;
-	private Date fecha;
+	@Temporal(TemporalType.DATE)private Date fecha;
 	private double importe;
 	private double iva;
-	private FacturaStatus status = FacturaStatus.SIN_ABONAR;
+	@Enumerated(EnumType.STRING)private FacturaStatus status = FacturaStatus.SIN_ABONAR;
 
+	@OneToMany(mappedBy="factura")
 	private Set<Averia> averias = new HashSet<Averia>();
+	@OneToMany(mappedBy="factura")
 	private Set<Cargo> cargos = new HashSet<Cargo>();
+
+	Factura() {
+
+	}
 
 	public Factura(long l, Date today) {
 		this(l);
@@ -35,6 +57,11 @@ public class Factura {
 		this.comprobarAverias(averias);
 		this.averias = new HashSet<Averia>(averias);
 		this.status = FacturaStatus.SIN_ABONAR;
+	}
+
+	public Factura(long numero, Date fecha, List<Averia> averias) {
+		this(numero, fecha);
+		this.averias = new HashSet<Averia>(averias);
 	}
 
 	private void comprobarAverias(List<Averia> averias2) {
@@ -57,9 +84,6 @@ public class Factura {
 	public void addAveria(Averia averia) {
 		if (!this.status.equals(FacturaStatus.SIN_ABONAR)) {
 			throw new IllegalStateException("La factura ya está abonada");
-		}
-		if (!averia.getStatus().equals(AveriaStatus.TERMINADA)) {
-			throw new IllegalStateException("La avería aún no está terminada.");
 		}
 		Association.Facturar.link(this, averia);
 		this.calcularImporte();
@@ -154,6 +178,15 @@ public class Factura {
 
 	public FacturaStatus getStatus() {
 		return status;
+	}
+
+	public void setFecha(Date now) {
+		this.fecha = new Date(now.getTime());
+
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 }
