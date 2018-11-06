@@ -13,7 +13,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="TINTERVENCIONES",uniqueConstraints = { @UniqueConstraint(columnNames = { "AVERIA_ID", "mEeCaNico_id" }) })
+@Table(name = "TINTERVENCIONES", uniqueConstraints = {
+		@UniqueConstraint(columnNames = { "AVERIA_ID", "mEeCaNico_id" }) })
 public class Intervencion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +26,7 @@ public class Intervencion {
 	private int minutos;
 
 	@OneToMany(mappedBy = "intervencion")
-	private Set<Sustitucion> sustituciones;
+	private Set<Sustitucion> sustituciones = new HashSet<Sustitucion>();
 
 	Intervencion() {
 
@@ -95,7 +96,7 @@ public class Intervencion {
 	}
 
 	public void setMinutos(int i) {
-		this.minutos = minutos;
+		this.minutos = i;
 
 	}
 

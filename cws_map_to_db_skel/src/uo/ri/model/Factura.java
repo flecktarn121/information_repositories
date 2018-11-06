@@ -23,20 +23,22 @@ import uo.ri.model.types.AveriaStatus;
 import uo.ri.model.types.FacturaStatus;
 
 @Entity
-@Table(name="TFACTURAS")
+@Table(name = "TFACTURAS")
 public class Factura {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Long numero;
-	@Temporal(TemporalType.DATE)private Date fecha;
+	@Temporal(TemporalType.DATE)
+	private Date fecha;
 	private double importe;
 	private double iva;
-	@Enumerated(EnumType.STRING)private FacturaStatus status = FacturaStatus.SIN_ABONAR;
+	@Enumerated(EnumType.STRING)
+	private FacturaStatus status = FacturaStatus.SIN_ABONAR;
 
-	@OneToMany(mappedBy="factura")
+	@OneToMany(mappedBy = "factura")
 	private Set<Averia> averias = new HashSet<Averia>();
-	@OneToMany(mappedBy="factura")
+	@OneToMany(mappedBy = "factura")
 	private Set<Cargo> cargos = new HashSet<Cargo>();
 
 	Factura() {
@@ -53,6 +55,11 @@ public class Factura {
 	}
 
 	public Factura(long numero, List<Averia> averias) {
+		averias.parallelStream().forEach((averia) -> {
+			if (!averia.getStatus().equals(AveriaStatus.TERMINADA)) {
+				throw new IllegalStateException("La averia debe estar termianda para introducirse en la factura");
+			}
+		});
 		this.numero = numero;
 		this.comprobarAverias(averias);
 		this.averias = new HashSet<Averia>(averias);

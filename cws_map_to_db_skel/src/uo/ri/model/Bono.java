@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TBONOS")
+@Table(name = "TBONOS")
 public class Bono extends MedioPago {
 
 	private String codigo;
@@ -20,8 +20,18 @@ public class Bono extends MedioPago {
 		this.codigo = codigo;
 	}
 
+	@Override
+	public void pagar(double importe) {
+		if (importe > disponible) {
+			throw new IllegalStateException("No hay suficiente saldo disponible en el bono");
+		}
+		super.pagar(importe);
+	}
+
 	public Bono(String string, double d, String string2) {
-		// TODO Auto-generated constructor stub
+		codigo = string;
+		disponible = d;
+		descripcion = string2;
 	}
 
 	public Bono(String codigo, double disponible) {

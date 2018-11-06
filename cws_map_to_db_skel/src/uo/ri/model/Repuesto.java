@@ -23,7 +23,7 @@ public class Repuesto {
 	private double precio;
 
 	@OneToMany(mappedBy="repuesto")
-	private Set<Sustitucion> sustituciones;
+	private Set<Sustitucion> sustituciones = new HashSet<Sustitucion>();
 
 	Repuesto() {
 

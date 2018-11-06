@@ -19,14 +19,15 @@ import javax.persistence.UniqueConstraint;
 import uo.ri.model.types.AveriaStatus;
 
 @Entity
-@Table(name="TAVERIAS", uniqueConstraints = { @UniqueConstraint(columnNames = { "VEHICULO_ID", "FECHA" }) })
+@Table(name = "TAVERIAS", uniqueConstraints = { @UniqueConstraint(columnNames = { "VEHICULO_ID", "FECHA" }) })
 public class Averia {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String descripcion;
-	@Temporal(TemporalType.DATE) private Date fecha;
+	@Temporal(TemporalType.DATE)
+	private Date fecha;
 	private double importe = 0.0;
 	private AveriaStatus status = AveriaStatus.ABIERTA;
 
@@ -37,12 +38,12 @@ public class Averia {
 	@ManyToOne
 	private Mecanico mecanico;
 
-	@OneToMany(mappedBy="averia")
+	@OneToMany(mappedBy = "averia")
 	private Set<Intervencion> intervenciones = new HashSet<Intervencion>();
 
 	Averia() {
-		}
-	
+	}
+
 	public Averia(Vehiculo vehiculo) {
 		super();
 		this.fecha = new Date();
@@ -64,9 +65,12 @@ public class Averia {
 	 *             enlazada con otro mecánico
 	 */
 	public void assignTo(Mecanico mecanico) {
-		// Solo se puede asignar una averia que está ABIERTA
-		// linkado de averia y mecanico
-		// la averia pasa a ASIGNADA
+		if (!this.status.equals(AveriaStatus.ABIERTA) || this.mecanico != null) {
+			throw new IllegalStateException("La averia no esta en estado abierta.");
+		} else {
+			Association.Asignar.link(mecanico, this);
+			this.status = AveriaStatus.ASIGNADA;
+		}
 	}
 
 	/**
@@ -79,6 +83,13 @@ public class Averia {
 	 *             enlazada con un mecánico
 	 */
 	public void markAsFinished() {
+		if (!this.status.equals(AveriaStatus.ASIGNADA) || this.mecanico == null) {
+			throw new IllegalStateException("La averia no esta en estado asignada o no tiene mecanico.");
+		} else {
+			this.importe = this.calcularImporte();
+			this.status = AveriaStatus.TERMINADA;
+			Association.Asignar.unlink(this.mecanico, this);
+		}
 	}
 
 	/**
@@ -91,8 +102,13 @@ public class Averia {
 	 *             si - La avería no está en estado TERMINADA
 	 */
 	public void reopen() {
-		// Se verifica que está en estado TERMINADA
-		// Se pasa la averia a ABIERTA
+		if (!this.status.equals(AveriaStatus.TERMINADA)) {
+			throw new IllegalStateException("La averia no esta terminada.");
+
+		} else {
+			this.status = AveriaStatus.ABIERTA;
+		}
+
 	}
 
 	/**
@@ -105,6 +121,11 @@ public class Averia {
 	 *             está enlazada con la factura
 	 */
 	public void markBackToFinished() {
+		if (!this.status.equals(AveriaStatus.FACTURADA) || this.factura != null) {
+			throw new IllegalStateException("La averia no está facturada o aun tiene la factura asignada");
+		} else {
+			this.status = AveriaStatus.TERMINADA;
+		}
 	}
 
 	/**
@@ -119,7 +140,7 @@ public class Averia {
 	public void markAsInvoiced() {
 		if (factura == null) {
 			throw new IllegalStateException("Esta avería no tiene factura asignada.");
-		} else if (this.status.equals(AveriaStatus.TERMINADA)) {
+		} else if (!this.status.equals(AveriaStatus.TERMINADA)) {
 			throw new IllegalStateException("Esta avería no está terminada.");
 		} else {
 			this.status = AveriaStatus.FACTURADA;
@@ -134,6 +155,11 @@ public class Averia {
 	 *             si - La averia no está en estado ASIGNADA, o
 	 */
 	public void desassign() {
+		if (!this.status.equals(AveriaStatus.ASIGNADA)) {
+			throw new IllegalStateException("La averia no esta asignada");
+		} else {
+			Association.Asignar.unlink(this.mecanico, this);
+		}
 	}
 
 	public AveriaStatus getStatus() {
@@ -174,9 +200,14 @@ public class Averia {
 	}
 
 	public double getImporte() {
+		this.importe = this.calcularImporte();
+		return this.importe;
 
-		return intervenciones.parallelStream().map(Intervencion::getImporte).reduce(0.0, ((acc, pasta) -> acc + pasta));
+	}
 
+	private double calcularImporte() {
+		return intervenciones.parallelStream().map(Intervencion::getImporte).reduce(0.0,
+				((acc, pasta) -> acc + pasta));
 	}
 
 	public Date getFecha() {

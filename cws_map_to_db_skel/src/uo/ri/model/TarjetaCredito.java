@@ -11,7 +11,8 @@ public class TarjetaCredito extends MedioPago {
 
 	protected String numero;
 	protected String tipo;
-	@Temporal(TemporalType.DATE) protected Date validez;
+	@Temporal(TemporalType.DATE)
+	protected Date validez;
 
 	TarjetaCredito() {
 
@@ -23,8 +24,12 @@ public class TarjetaCredito extends MedioPago {
 	}
 
 	public TarjetaCredito(String string, String string2, Date tomorrow) {
-		// TODO Auto-generated constructor stub
+		
+		this.numero = string;
+		this.tipo = string2;
+		this.validez = new Date(tomorrow.getTime());
 	}
+	
 
 	public String getNumero() {
 		return numero;

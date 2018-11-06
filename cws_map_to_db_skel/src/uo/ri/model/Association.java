@@ -1,7 +1,5 @@
 package uo.ri.model;
 
-import java.util.Set;
-
 import uo.ri.model.types.AveriaStatus;
 
 public class Association {
@@ -146,6 +144,14 @@ public class Association {
 	}
 
 	public static class Sustituir {
+		
+		public static void link(Repuesto repuesto, Intervencion intrvencion, Sustitucion sustitucion) {
+			sustitucion.setIntervencion(intrvencion);
+			sustitucion.setRepuesto(repuesto);
+			
+			repuesto._getSustituciones().add(sustitucion);
+			intrvencion._getSustituciones().add(sustitucion);
+		}
 
 		public static void unlink(Sustitucion sustitucion) {
 			sustitucion.getIntervencion()._getSustituciones().remove(sustitucion);

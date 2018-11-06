@@ -26,8 +26,7 @@ public class Sustitucion {
 
 	public Sustitucion(Repuesto repuesto, Intervencion intervencion) {
 		super();
-		this.repuesto = repuesto;
-		this.intervencion = intervencion;
+		Association.Sustituir.link(repuesto, intervencion, this);
 	}
 
 	public Sustitucion(Repuesto repuesto, Intervencion intervencion, int cantidad) {

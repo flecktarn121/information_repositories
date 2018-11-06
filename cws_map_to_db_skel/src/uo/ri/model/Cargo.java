@@ -8,8 +8,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import uo.ri.model.types.AveriaStatus;
+import uo.ri.model.types.FacturaStatus;
+
 @Entity
-@Table(name="TCARGOS",uniqueConstraints = { @UniqueConstraint(columnNames = { "FACTURA_ID", "MEDIOPAGO_ID" }) })
+@Table(name = "TCARGOS", uniqueConstraints = { @UniqueConstraint(columnNames = { "FACTURA_ID", "MEDIOPAGO_ID" }) })
 public class Cargo {
 
 	@Id
@@ -27,6 +30,9 @@ public class Cargo {
 	}
 
 	public Cargo(Factura factura, MedioPago medioPago, double importe) {
+		medioPago.pagar(importe);
+		this.importe = importe;
+		Association.Cargar.link(medioPago, this, factura);
 		// incrementar el importe en el acumulado del medio de pago
 		// guardar el importe
 		// enlazar (link) factura, este cargo y medioDePago
@@ -41,6 +47,12 @@ public class Cargo {
 	 *             if the invoice is already settled
 	 */
 	public void rewind() {
+		if (this.factura.getStatus().equals(FacturaStatus.ABONADA)) {
+			throw new IllegalStateException("La factura esta abonada");
+		} else {
+			this.medioPago.pagar(-this.importe);
+			Association.Cargar.unlink(this);
+		}
 		// verificar que la factura no esta ABONADA
 		// decrementar acumulado en medio de pago (medioPago.pagar( -importe ))
 		// desenlazar factura, cargo y medio de pago
