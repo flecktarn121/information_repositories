@@ -1,6 +1,7 @@
 package uo.ri.model;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
@@ -19,6 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import alb.util.math.Round;
 import uo.ri.model.types.AveriaStatus;
 import uo.ri.model.types.FacturaStatus;
 
@@ -30,7 +32,7 @@ public class Factura {
 	private Long id;
 	private Long numero;
 	@Temporal(TemporalType.DATE)
-	private Date fecha;
+	private Date fecha = new Date();
 	private double importe;
 	private double iva;
 	@Enumerated(EnumType.STRING)
@@ -39,7 +41,7 @@ public class Factura {
 	@OneToMany(mappedBy = "factura")
 	private Set<Averia> averias = new HashSet<Averia>();
 	@OneToMany(mappedBy = "factura")
-	private Set<Cargo> cargos = new HashSet<Cargo>();
+	private Set<Cargo> cargos = Collections.synchronizedSet(new HashSet<Cargo>());
 
 	Factura() {
 
@@ -62,7 +64,10 @@ public class Factura {
 		});
 		this.numero = numero;
 		this.comprobarAverias(averias);
-		this.averias = new HashSet<Averia>(averias);
+		averias.parallelStream().forEach((averia) -> {
+			Association.Facturar.link(this, averia);
+		});
+		;
 		this.status = FacturaStatus.SIN_ABONAR;
 	}
 
@@ -92,6 +97,7 @@ public class Factura {
 		if (!this.status.equals(FacturaStatus.SIN_ABONAR)) {
 			throw new IllegalStateException("La factura ya está abonada");
 		}
+		averia.setStatus(AveriaStatus.FACTURADA);
 		Association.Facturar.link(this, averia);
 		this.calcularImporte();
 	}
@@ -102,14 +108,8 @@ public class Factura {
 	 */
 	void calcularImporte() {
 		this.importe = averias.parallelStream().map(Averia::getImporte).reduce(0.0, ((a, b) -> a + b));
+		importe += Round.twoCents((importe * this.getIva()));
 
-		Date antesRajoy = new GregorianCalendar(2012, Calendar.JULY, 1).getTime();
-
-		if (!new Date().equals(antesRajoy)) {
-			this.iva = 0.18;
-		} else {
-			this.iva = 0.21;
-		}
 	}
 
 	/**
@@ -122,6 +122,13 @@ public class Factura {
 	 *             si la factura no está en estado SIN_ABONAR
 	 */
 	public void removeAveria(Averia averia) {
+		if (!this.status.equals(FacturaStatus.SIN_ABONAR)) {
+			throw new IllegalStateException("La factura debe estar sin abonar.");
+		} else {
+			Association.Facturar.unlink(this, averia);
+			averia.markBackToFinished();
+			this.calcularImporte();
+		}
 		// verificar que la factura está sin abonar
 		// desenlazar factura y averia
 		// retornar la averia al estado FINALIZADA ( averia.markBackToFinished() )
@@ -160,7 +167,7 @@ public class Factura {
 	}
 
 	public Set<Cargo> getCargos() {
-		return new HashSet<Cargo>(cargos);
+		return Collections.synchronizedSet(new HashSet<Cargo>(cargos));
 	}
 
 	Set<Cargo> _getCargos() {
@@ -176,10 +183,17 @@ public class Factura {
 	}
 
 	public double getImporte() {
+		this.calcularImporte();
 		return importe;
 	}
 
 	public double getIva() {
+		Date antesRajoy = new GregorianCalendar(2012, Calendar.JULY, 1).getTime();
+		if (fecha.compareTo((antesRajoy)) < 0) {
+			this.iva = 0.18;
+		} else {
+			this.iva = 0.21;
+		}
 		return iva;
 	}
 

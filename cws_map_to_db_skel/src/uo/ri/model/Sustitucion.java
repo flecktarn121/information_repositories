@@ -31,6 +31,9 @@ public class Sustitucion {
 
 	public Sustitucion(Repuesto repuesto, Intervencion intervencion, int cantidad) {
 		this(repuesto, intervencion);
+		if (cantidad <= 0) {
+			throw new IllegalArgumentException("la cantidad no puede ser menos que 0.");
+		}
 		this.cantidad = cantidad;
 	}
 
@@ -58,7 +61,6 @@ public class Sustitucion {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + cantidad;
 		result = prime * result + ((intervencion == null) ? 0 : intervencion.hashCode());
 		result = prime * result + ((repuesto == null) ? 0 : repuesto.hashCode());
 		return result;

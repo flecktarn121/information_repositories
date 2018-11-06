@@ -26,6 +26,7 @@ public class Bono extends MedioPago {
 			throw new IllegalStateException("No hay suficiente saldo disponible en el bono");
 		}
 		super.pagar(importe);
+		disponible -= importe;
 	}
 
 	public Bono(String string, double d, String string2) {

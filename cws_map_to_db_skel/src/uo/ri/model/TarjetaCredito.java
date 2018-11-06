@@ -24,12 +24,19 @@ public class TarjetaCredito extends MedioPago {
 	}
 
 	public TarjetaCredito(String string, String string2, Date tomorrow) {
-		
+
 		this.numero = string;
 		this.tipo = string2;
 		this.validez = new Date(tomorrow.getTime());
 	}
-	
+
+	@Override
+	public void pagar(double importe) {
+		if (new Date(System.currentTimeMillis()).after(this.validez)) {
+			throw new IllegalStateException("La tarjeta de credito esta caducada.");
+		}
+		super.pagar(importe);
+	}
 
 	public String getNumero() {
 		return numero;
