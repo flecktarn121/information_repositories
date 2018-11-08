@@ -1,8 +1,10 @@
 package uo.ri.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="TMETALICOS")
 public class Metalico extends MedioPago {
 
 	Metalico() {
