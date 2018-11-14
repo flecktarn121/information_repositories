@@ -30,8 +30,8 @@ public class Cliente {
 
 	@OneToMany(mappedBy = "cliente")
 	private Set<Vehiculo> vehiculos = new HashSet<Vehiculo>();
-	@OneToMany(mappedBy = "cliente")
-	private Set<MedioPago> mediosDePago = new HashSet<MedioPago>();
+	@OneToMany(mappedBy = "cliente" )
+	private Set<MedioPago> mediosPago = new HashSet<MedioPago>();
 
 	Cliente() {
 
@@ -112,16 +112,16 @@ public class Cliente {
 	}
 
 	public Set<MedioPago> getMediosDePago() {
-		return new HashSet<MedioPago>(mediosDePago);
+		return new HashSet<MedioPago>(mediosPago);
 	}
 
 	Set<MedioPago> _getMediosDePago() {
-		return mediosDePago;
+		return mediosPago;
 	}
 
 	public Set<MedioPago> getMediosPago() {
 
-		return new HashSet<MedioPago>(mediosDePago);
+		return new HashSet<MedioPago>(mediosPago);
 	}
 
 	public Long getId() {

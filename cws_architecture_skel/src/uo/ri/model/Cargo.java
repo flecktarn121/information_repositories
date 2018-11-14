@@ -8,7 +8,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import uo.ri.model.types.AveriaStatus;
 import uo.ri.model.types.FacturaStatus;
 
 @Entity

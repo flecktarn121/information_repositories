@@ -10,6 +10,8 @@ import uo.ri.business.dto.PaymentMeanDto;
 import uo.ri.business.exception.BusinessException;
 import uo.ri.business.impl.CommandExecutor;
 import uo.ri.business.impl.invoice.command.CreateInvoiceFor;
+import uo.ri.business.impl.invoice.command.FindInvoiceById;
+import uo.ri.business.impl.invoice.command.FindPayMethodsByInvoice;
 import uo.ri.conf.Factory;
 
 public class InvoiceServiceImpl implements InvoiceService {
@@ -17,29 +19,26 @@ public class InvoiceServiceImpl implements InvoiceService {
 	private CommandExecutor executor = Factory.executor.forExecutor();
 
 	@Override
-	public InvoiceDto createInvoiceFor(List<Long> idsAveria)
-			throws BusinessException {
+	public InvoiceDto createInvoiceFor(List<Long> idsAveria) throws BusinessException {
 
-		return executor.execute( new CreateInvoiceFor( idsAveria ));
+		return executor.execute(new CreateInvoiceFor(idsAveria));
 	}
 
 	@Override
 	public InvoiceDto findInvoice(Long numeroInvoiceDto) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return executor.execute(new FindInvoiceById(numeroInvoiceDto));
 	}
 
 	@Override
-	public List<PaymentMeanDto> findPayMethodsForInvoice(Long idInvoiceDto)
-			throws BusinessException {
+	public List<PaymentMeanDto> findPayMethodsForInvoice(Long idInvoiceDto) throws BusinessException {
+
 		
-		// TODO Auto-generated method stub
-		return null;
+		return executor.execute(new FindPayMethodsByInvoice(idInvoiceDto));
 	}
 
 	@Override
-	public void settleInvoice(Long idInvoiceDto, Map<Long, Double> cargos)
-			throws BusinessException {
+	public void settleInvoice(Long idInvoiceDto, Map<Long, Double> cargos) throws BusinessException {
 		// TODO Auto-generated method stub
 	}
 

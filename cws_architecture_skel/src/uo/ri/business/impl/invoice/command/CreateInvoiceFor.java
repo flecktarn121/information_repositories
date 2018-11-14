@@ -11,6 +11,7 @@ import uo.ri.business.repository.FacturaRepository;
 import uo.ri.conf.Factory;
 import uo.ri.model.Averia;
 import uo.ri.model.Factura;
+import uo.ri.model.types.AveriaStatus;
 
 public class CreateInvoiceFor implements Command<InvoiceDto> {
 
@@ -32,8 +33,13 @@ public class CreateInvoiceFor implements Command<InvoiceDto> {
 		return DtoAssembler.toDto(f);
 	}
 
-	private void checkAllFinished(List<Averia> averias) {
-		// TODO checkealas
+	private void checkAllFinished(List<Averia> averias)throws BusinessException {
+		
+		for(Averia averia: averias) {
+			if(!averia.getStatus().equals(AveriaStatus.TERMINADA)) {
+				throw new BusinessException("No todas las averias estan terminadas");
+			}
+		}
 		
 	}
 
