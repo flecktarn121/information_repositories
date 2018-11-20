@@ -26,7 +26,7 @@ public class Mecanico {
 	private Set<Averia> averias = new HashSet<Averia>();
 	@OneToMany(mappedBy = "mecanico")
 	private Set<Intervencion> intervenciones = new HashSet<Intervencion>();
-
+	@OneToMany(mappedBy = "mechanic")
 	private Set<Contract> contracts = new HashSet<Contract>();
 
 	Mecanico() {

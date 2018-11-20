@@ -1,13 +1,28 @@
 package uo.ri.model;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+@Entity
 public class ContractType {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String name;
+	@Column(name = "compensationdaysperyear")
 	private int compensationDays;
+	@OneToMany(mappedBy = "type")
 	private Set<Contract> contracts = new HashSet<Contract>();
+
+	public ContractType() {
+	}
 
 	public ContractType(String name, int compensationDays) {
 		this.name = name;

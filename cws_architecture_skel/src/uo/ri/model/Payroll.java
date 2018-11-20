@@ -2,18 +2,45 @@ package uo.ri.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import alb.util.date.Dates;
 
+@Entity
+@Table(name = "TNOMINAS")
 public class Payroll {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "fecha")
 	private Date date;
+	@Column(name = "salariobase")
 	private double baseSalary;
+	@Column(name = "salarioextra")
 	private double extraSalary;
+	@Column(name = "productividad")
 	private double productivity;
+	@Column(name = "trienios")
 	private double triennium;
 	private double irpf;
+	@Column(name = "seguridadsocial")
 	private double socialSecurity;
+	@ManyToOne
 	private Contract contract;
 	private double totalOfInterventions;
+
+	public Payroll() {
+
+	}
 
 	public Payroll(Contract contract2, Date payrollDate, double totalInterventions) {
 		Association.Percibir.link(contract2, this);
