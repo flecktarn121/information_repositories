@@ -48,7 +48,6 @@ public class Association {
 
 		}
 
-
 	}
 
 	public static class Averiar {
@@ -161,6 +160,50 @@ public class Association {
 			sustitucion.setIntervencion(null);
 			sustitucion.setRepuesto(null);
 
+		}
+	}
+
+	public static class Categorize {
+
+		public static void link(Contract c, ContractCategory category) {
+			c._setCategory(category);
+			category._getContracts().add(c);
+
+		}
+
+	}
+
+	public static class Typefy {
+
+		public static void link(Contract c, ContractType type) {
+			c._setType(type);
+			type._getContracts().add(c);
+
+		}
+
+	}
+
+	public static class Vinculate {
+		public static void link(Contract c, Mecanico m) {
+			c._setMechanic(m);
+			m._getContracts().add(c);
+		}
+
+		public static void unLink(Contract c, Mecanico m) {
+			m._getContracts().remove(c);
+			c._setMechanic(null);
+		}
+	}
+
+	public static class Percibir {
+		public static void link(Contract c, Payroll n) {
+			n.setContract(c);
+			c._getPayrolls().add(n);
+		}
+
+		public static void unLink(Contract c, Payroll n) {
+			c._getPayrolls().remove(n);
+			n.setContract(c);
 		}
 	}
 

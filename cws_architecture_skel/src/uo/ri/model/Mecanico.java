@@ -10,8 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import uo.ri.model.types.ContractStatus;
+
 @Entity
-@Table(name="TMECANICOS")
+@Table(name = "TMECANICOS")
 public class Mecanico {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +22,12 @@ public class Mecanico {
 	private String apellidos;
 	private String nombre;
 
-	@OneToMany(mappedBy="mecanico")private Set<Averia> averias = new HashSet<Averia>();
-	@OneToMany(mappedBy="mecanico")private Set<Intervencion> intervenciones = new HashSet<Intervencion>();
+	@OneToMany(mappedBy = "mecanico")
+	private Set<Averia> averias = new HashSet<Averia>();
+	@OneToMany(mappedBy = "mecanico")
+	private Set<Intervencion> intervenciones = new HashSet<Intervencion>();
+
+	private Set<Contract> contracts = new HashSet<Contract>();
 
 	Mecanico() {
 
@@ -102,6 +108,30 @@ public class Mecanico {
 
 	public Long getId() {
 		return id;
+	}
+
+	public Set<Contract> getContracts() {
+		return new HashSet<Contract>(contracts);
+	}
+
+	Set<Contract> _getContracts() {
+		return (contracts);
+	}
+
+	/**
+	 * Gets the active contract of the mechanic
+	 * 
+	 * @return the active contract, or null i there isn't any
+	 */
+	public Contract getActiveContract() {
+		Contract contract = null;
+		for (Contract con : contracts) {
+			if (con.getStatus().equals(ContractStatus.ACTIVE)) {
+				contract = con;
+				break;
+			}
+		}
+		return contract;
 	}
 
 }
