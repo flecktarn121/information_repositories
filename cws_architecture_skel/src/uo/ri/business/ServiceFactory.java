@@ -15,4 +15,12 @@ public interface ServiceFactory {
 	// Mechanic services
 	CloseBreakdownService forClosingBreakdown();
 
+	ContractCategoryCrudService forContractCategoryCrud();
+
+	ContractCrudService forContractCrud();
+
+	ContractTypeCrudService forContractTypeCrud();
+
+	PayrollService forPayroll();
+
 }
