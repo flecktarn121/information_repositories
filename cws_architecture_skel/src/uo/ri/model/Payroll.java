@@ -134,4 +134,8 @@ public class Payroll {
 		this.contract = c;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
 }

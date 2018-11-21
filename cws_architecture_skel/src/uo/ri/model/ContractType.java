@@ -46,10 +46,23 @@ public class ContractType {
 	}
 
 	@Override
+	public String toString() {
+		return "ContractType [name=" + name + ", compensationDays=" + compensationDays + "]";
+	}
+
+	public Long getId() {
+
+		return this.id;
+	}
+
+	public void setCompensationDays(int days) {
+		this.compensationDays = days;
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + compensationDays;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -63,19 +76,12 @@ public class ContractType {
 		if (getClass() != obj.getClass())
 			return false;
 		ContractType other = (ContractType) obj;
-		if (compensationDays != other.compensationDays)
-			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "ContractType [name=" + name + ", compensationDays=" + compensationDays + "]";
 	}
 
 }

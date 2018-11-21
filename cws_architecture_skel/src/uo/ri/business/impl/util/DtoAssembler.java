@@ -8,36 +8,40 @@ import uo.ri.business.dto.BreakdownDto;
 import uo.ri.business.dto.CardDto;
 import uo.ri.business.dto.CashDto;
 import uo.ri.business.dto.ClientDto;
+import uo.ri.business.dto.ContractTypeDto;
 import uo.ri.business.dto.InvoiceDto;
 import uo.ri.business.dto.MechanicDto;
 import uo.ri.business.dto.PaymentMeanDto;
+import uo.ri.business.dto.PayrollDto;
 import uo.ri.business.dto.VoucherDto;
 import uo.ri.model.Averia;
 import uo.ri.model.Bono;
 import uo.ri.model.Cliente;
+import uo.ri.model.ContractType;
 import uo.ri.model.Factura;
 import uo.ri.model.Mecanico;
 import uo.ri.model.MedioPago;
 import uo.ri.model.Metalico;
+import uo.ri.model.Payroll;
 import uo.ri.model.TarjetaCredito;
 
 public class DtoAssembler {
 
 	public static ClientDto toDto(Cliente c) {
-		 ClientDto dto = new ClientDto();
-		 
-		 dto.id = c.getId();
-		 dto.dni = c.getDni();
-		 dto.name = c.getNombre();
-		 dto.surname = c.getApellidos();
-		 
-		 return dto;
+		ClientDto dto = new ClientDto();
+
+		dto.id = c.getId();
+		dto.dni = c.getDni();
+		dto.name = c.getNombre();
+		dto.surname = c.getApellidos();
+
+		return dto;
 	}
 
 	public static List<ClientDto> toClientDtoList(List<Cliente> clientes) {
 		List<ClientDto> res = new ArrayList<>();
-		for(Cliente c: clientes) {
-			res.add( DtoAssembler.toDto( c ) );
+		for (Cliente c : clientes) {
+			res.add(DtoAssembler.toDto(c));
 		}
 		return res;
 	}
@@ -53,16 +57,16 @@ public class DtoAssembler {
 
 	public static List<MechanicDto> toMechanicDtoList(List<Mecanico> list) {
 		List<MechanicDto> res = new ArrayList<>();
-		for(Mecanico m: list) {
-			res.add( toDto( m ) );
+		for (Mecanico m : list) {
+			res.add(toDto(m));
 		}
 		return res;
 	}
 
 	public static List<VoucherDto> toVoucherDtoList(List<Bono> list) {
 		List<VoucherDto> res = new ArrayList<>();
-		for(Bono b: list) {
-			res.add( toDto( b ) );
+		for (Bono b : list) {
+			res.add(toDto(b));
 		}
 		return res;
 	}
@@ -109,32 +113,25 @@ public class DtoAssembler {
 	}
 
 	public static List<PaymentMeanDto> toPaymentMeanDtoList(List<MedioPago> list) {
-		return list.stream()
-				.map( mp -> toDto( mp ) )
-				.collect( Collectors.toList() );
+		return list.stream().map(mp -> toDto(mp)).collect(Collectors.toList());
 	}
 
 	private static PaymentMeanDto toDto(MedioPago mp) {
 		if (mp instanceof Bono) {
-			return toDto( (Bono) mp );
-		}
-		else if (mp instanceof TarjetaCredito) {
-			return toDto( (TarjetaCredito) mp );
-		}
-		else if (mp instanceof Metalico) {
-			return toDto( (Metalico) mp);
-		}
-		else {
+			return toDto((Bono) mp);
+		} else if (mp instanceof TarjetaCredito) {
+			return toDto((TarjetaCredito) mp);
+		} else if (mp instanceof Metalico) {
+			return toDto((Metalico) mp);
+		} else {
 			throw new RuntimeException("Unexpected type of payment mean");
 		}
 	}
 
 	public static List<BreakdownDto> toBreakdownDtoList(List<Averia> list) {
-		return list.stream()
-				.map( a -> toDto( a ) )
-				.collect( Collectors.toList() );
+		return list.stream().map(a -> toDto(a)).collect(Collectors.toList());
 	}
-	
+
 	public static BreakdownDto toDto(Averia a) {
 		BreakdownDto dto = new BreakdownDto();
 		dto.id = a.getId();
@@ -145,6 +142,38 @@ public class DtoAssembler {
 		dto.total = a.getImporte();
 		dto.status = a.getStatus().toString();
 		return dto;
+	}
+
+	public static ContractTypeDto toDto(ContractType t) {
+		ContractTypeDto dto = new ContractTypeDto();
+		dto.id = t.getId();
+		dto.name = t.getName();
+		dto.compensationDays = t.getCompensationDays();
+		return dto;
+	}
+
+	public static List<ContractTypeDto> toContractTypeDtoList(List<ContractType> list) {
+		return list.parallelStream().map((type) -> toDto(type)).collect(Collectors.toList());
+	}
+
+	public static PayrollDto toDto(Payroll p) {
+		PayrollDto dto = new PayrollDto();
+		dto.id = p.getId();
+		dto.baseSalary = p.getBaseSalary();
+		dto.date = p.getDate();
+		dto.discountTotal = p.getDiscountTotal();
+		dto.extraSalary = p.getExtraSalary();
+		dto.grossTotal = p.getGrossTotal();
+		dto.irpf = p.getIrpf();
+		dto.netTotal = p.getNetTotal();
+		dto.productivity = p.getProductivity();
+		dto.socialSecurity = p.getSocialSecurity();
+		dto.triennium = p.getTriennium();
+		return dto;
+	}
+	
+	public static List<PayrollDto> toPayrollDtoList(List<Payroll> list) {
+		return list.parallelStream().map((payroll) -> toDto(payroll)).collect(Collectors.toList());
 	}
 
 }

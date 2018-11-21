@@ -5,13 +5,18 @@ import java.util.List;
 import uo.ri.business.dto.PayrollDto;
 import uo.ri.business.exception.BusinessException;
 import uo.ri.business.impl.Command;
+import uo.ri.business.impl.util.DtoAssembler;
+import uo.ri.business.impl.util.EntityAssembler;
+import uo.ri.business.repository.PayrollRepository;
+import uo.ri.conf.Factory;
 
 public class FindAllPayrolls implements Command<List<PayrollDto>> {
+	private PayrollRepository repo = Factory.repository.forPayroll();
 
 	@Override
 	public List<PayrollDto> execute() throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return DtoAssembler.toPayrollDtoList(repo.findAll());
 	}
 
 }
