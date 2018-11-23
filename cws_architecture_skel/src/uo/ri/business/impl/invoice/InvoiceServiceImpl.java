@@ -39,12 +39,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	public void settleInvoice(Long idInvoiceDto, Map<Long, Double> cargos) throws BusinessException {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public List<BreakdownDto> findRepairsByClient(String dni) throws BusinessException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

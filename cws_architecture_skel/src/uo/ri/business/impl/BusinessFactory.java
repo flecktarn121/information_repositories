@@ -45,7 +45,7 @@ public class BusinessFactory implements ServiceFactory {
 
 	@Override
 	public ContractCrudService forContractCrud() {
-				return new ContractCrudServiceImpl();
+		return new ContractCrudServiceImpl();
 	}
 
 	@Override

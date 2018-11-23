@@ -46,4 +46,11 @@ public interface MechanicCrudService {
 	 */
 	List<MechanicDto> findAllMechanics() throws BusinessException;
 	
+	/**
+	 * @return the list of all mechanics registered in the system with an active contract
+	 * 
+	 * DO NOT @throws BusinessException
+	 */
+	List<MechanicDto> findAllActiveMechanics() throws BusinessException;
+	
 }

@@ -110,7 +110,9 @@ public class Intervencion {
 
 	public double getImporte() {
 		return (minutos * (averia.getVehiculo().getTipo().getPrecioHora() / 60))
-				+ (sustituciones.parallelStream().map(Sustitucion::getImporte).reduce(0.0, ((a, b) -> a + b)));
+				+ (sustituciones.parallelStream()
+						.map(Sustitucion::getImporte)
+						.reduce(0.0, ((a, b) -> a + b)));
 	}
 
 	public Long getId() {

@@ -8,7 +8,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="TTARJETASCREDITO")
+@Table(name = "TTARJETASCREDITO")
 public class TarjetaCredito extends MedioPago {
 
 	protected String numero;

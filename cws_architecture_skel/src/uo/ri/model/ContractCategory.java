@@ -9,21 +9,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 @Entity
+@Table(name = "TCATEGORIACONTRATO")
 public class ContractCategory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	@Column(name="trieniumsalary")
+	@Column(name = "trieniumsalary")
 	private double trienniumSalary;
-	@Column(name="productplus")
+	@Column(name = "productplus")
 	private double productivityPlus;
-	@OneToMany(mappedBy="category")
+	@OneToMany(mappedBy = "category")
 	private Set<Contract> contracts = new HashSet<Contract>();
-	
+
 	public ContractCategory() {
-	
+
 	}
 
 	public ContractCategory(String name, double trienniumSalary, double productivityPlus) {

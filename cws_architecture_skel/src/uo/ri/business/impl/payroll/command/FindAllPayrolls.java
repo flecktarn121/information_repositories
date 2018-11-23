@@ -6,7 +6,6 @@ import uo.ri.business.dto.PayrollDto;
 import uo.ri.business.exception.BusinessException;
 import uo.ri.business.impl.Command;
 import uo.ri.business.impl.util.DtoAssembler;
-import uo.ri.business.impl.util.EntityAssembler;
 import uo.ri.business.repository.PayrollRepository;
 import uo.ri.conf.Factory;
 

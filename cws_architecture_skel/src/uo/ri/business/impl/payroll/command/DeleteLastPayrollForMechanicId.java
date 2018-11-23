@@ -5,6 +5,9 @@ import uo.ri.business.exception.BusinessException;
 import uo.ri.business.impl.Command;
 import uo.ri.business.repository.PayrollRepository;
 import uo.ri.conf.Factory;
+import uo.ri.model.Association;
+import uo.ri.model.Mecanico;
+import uo.ri.model.Payroll;
 
 public class DeleteLastPayrollForMechanicId implements Command<Void> {
 	private PayrollRepository repo = Factory.repository.forPayroll();
@@ -16,9 +19,11 @@ public class DeleteLastPayrollForMechanicId implements Command<Void> {
 
 	@Override
 	public Void execute() throws BusinessException {
-		BusinessCheck.isNotNull(Factory.repository.forMechanic().findById(idMechanic),
-				"There is not a mechanic with that id.");
-		repo.removeByMechanicId(idMechanic);
+		Mecanico m = Factory.repository.forMechanic().findById(idMechanic);
+		BusinessCheck.isNotNull(m, "There is not a mechanic with that id.");
+		Payroll lastPayroll = m.getActiveContract().getLastPayroll();
+		Association.Percibir.unLink(m.getActiveContract(), lastPayroll);
+		repo.remove(lastPayroll);
 		return null;
 	}
 

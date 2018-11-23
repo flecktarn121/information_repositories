@@ -106,7 +106,9 @@ public class Factura {
 	 * factura
 	 */
 	void calcularImporte() {
-		this.importe = averias.parallelStream().map(Averia::getImporte).reduce(0.0, ((a, b) -> a + b));
+		this.importe = averias.parallelStream()
+				.map(Averia::getImporte)
+				.reduce(0.0, ((a, b) -> a + b));
 		importe += Round.twoCents((importe * this.getIva()));
 
 	}
@@ -128,10 +130,6 @@ public class Factura {
 			averia.markBackToFinished();
 			this.calcularImporte();
 		}
-		// verificar que la factura está sin abonar
-		// desenlazar factura y averia
-		// retornar la averia al estado FINALIZADA ( averia.markBackToFinished() )
-		// volver a calcular el importe
 	}
 
 	/**

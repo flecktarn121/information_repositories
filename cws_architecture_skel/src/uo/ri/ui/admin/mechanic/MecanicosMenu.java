@@ -3,6 +3,7 @@ package uo.ri.ui.admin.mechanic;
 import alb.util.menu.BaseMenu;
 import uo.ri.ui.admin.mechanic.action.AddMechanicAction;
 import uo.ri.ui.admin.mechanic.action.DeleteMechanicAction;
+import uo.ri.ui.admin.mechanic.action.ListActiveMechanicsAction;
 import uo.ri.ui.admin.mechanic.action.ListMechanicsAction;
 import uo.ri.ui.admin.mechanic.action.UpdateMechanicAction;
 
@@ -16,6 +17,7 @@ public class MecanicosMenu extends BaseMenu {
 			{ "Modificar datos de mecánico", 	UpdateMechanicAction.class }, 
 			{ "Eliminar mecánico", 				DeleteMechanicAction.class }, 
 			{ "Listar mecánicos", 				ListMechanicsAction.class },
+			{"Listar mec�nicos activos", ListActiveMechanicsAction.class}
 		};
 	}
 

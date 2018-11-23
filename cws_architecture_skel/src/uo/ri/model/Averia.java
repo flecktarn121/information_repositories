@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +30,7 @@ public class Averia {
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
 	private double importe = 0.0;
+	@Enumerated(EnumType.STRING)
 	private AveriaStatus status = AveriaStatus.ABIERTA;
 
 	@ManyToOne
@@ -60,8 +63,8 @@ public class Averia {
 	 * @see Diagramas de estados en el enunciado de referencia
 	 * @param mecanico
 	 * @throws IllegalStateException
-	 *             si - La avería no está en estado ABIERTA, o - La avería ya está
-	 *             enlazada con otro mecánico
+	 *             si - La avería no está en estado ABIERTA, o - La avería ya
+	 *             está enlazada con otro mecánico
 	 */
 	public void assignTo(Mecanico mecanico) {
 		if (!this.status.equals(AveriaStatus.ABIERTA) || this.mecanico != null) {
@@ -78,8 +81,8 @@ public class Averia {
 	 * 
 	 * @see Diagramas de estados en el enunciado de referencia
 	 * @throws IllegalStateException
-	 *             si - La avería no está en estado ASIGNADA, o - La avería no está
-	 *             enlazada con un mecánico
+	 *             si - La avería no está en estado ASIGNADA, o - La avería no
+	 *             está enlazada con un mecánico
 	 */
 	public void markAsFinished() {
 		if (!this.status.equals(AveriaStatus.ASIGNADA) || this.mecanico == null) {
@@ -133,8 +136,8 @@ public class Averia {
 	 * 
 	 * @see Diagramas de estados en el enunciado de referencia
 	 * @throws IllegalStateException
-	 *             si - La averia no está en estado TERMINADA, o - La avería no está
-	 *             enlazada con una factura
+	 *             si - La averia no está en estado TERMINADA, o - La avería no
+	 *             está enlazada con una factura
 	 */
 	public void markAsInvoiced() {
 		if (factura == null) {
@@ -205,8 +208,9 @@ public class Averia {
 	}
 
 	private double calcularImporte() {
-		return intervenciones.parallelStream().map(Intervencion::getImporte).reduce(0.0,
-				((acc, pasta) -> acc + pasta));
+		return intervenciones.parallelStream()
+				.map(Intervencion::getImporte)
+				.reduce(0.0, ((acc, pasta) -> acc + pasta));
 	}
 
 	public Date getFecha() {

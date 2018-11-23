@@ -11,6 +11,7 @@ import uo.ri.business.impl.mechanic.command.DeleteMechanic;
 import uo.ri.business.impl.mechanic.command.FindAllMechanics;
 import uo.ri.business.impl.mechanic.command.FindMechanicById;
 import uo.ri.business.impl.mechanic.command.UpdateMechanic;
+import uo.ri.business.impl.payroll.command.FindActiveMechanics;
 import uo.ri.conf.Factory;
 
 public class MechanicCrudServiceImpl implements MechanicCrudService {
@@ -40,6 +41,11 @@ public class MechanicCrudServiceImpl implements MechanicCrudService {
 	@Override
 	public MechanicDto findMechanicById(Long id) throws BusinessException {
 		return executor.execute(new FindMechanicById(id));
+	}
+
+	@Override
+	public List<MechanicDto> findAllActiveMechanics() throws BusinessException {
+		return executor.execute(new FindActiveMechanics());
 	}
 
 }

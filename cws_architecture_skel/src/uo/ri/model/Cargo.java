@@ -17,7 +17,6 @@ public class Cargo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
 	@ManyToOne
 	private Factura factura;
 	@ManyToOne
@@ -32,9 +31,6 @@ public class Cargo {
 		medioPago.pagar(importe);
 		this.importe = importe;
 		Association.Cargar.link(medioPago, this, factura);
-		// incrementar el importe en el acumulado del medio de pago
-		// guardar el importe
-		// enlazar (link) factura, este cargo y medioDePago
 	}
 
 	/**
@@ -52,9 +48,6 @@ public class Cargo {
 			this.medioPago.pagar(-this.importe);
 			Association.Cargar.unlink(this);
 		}
-		// verificar que la factura no esta ABONADA
-		// decrementar acumulado en medio de pago (medioPago.pagar( -importe ))
-		// desenlazar factura, cargo y medio de pago
 	}
 
 	public Factura getFactura() {

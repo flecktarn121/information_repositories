@@ -48,6 +48,9 @@
 	</named-query>
 
 	<!-- Factura queries -->
+	<named-query name="Factura.findAll">
+		<query>select f from Factura f</query>
+	</named-query>
 	<named-query name="Factura.findByNumber">
 		<query>select f from Factura f where f.numero = ?1</query>
 	</named-query>

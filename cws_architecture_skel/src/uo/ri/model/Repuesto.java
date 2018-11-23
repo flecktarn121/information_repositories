@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TREPUESTOS")
+@Table(name = "TREPUESTOS")
 public class Repuesto {
 
 	@Id
@@ -21,7 +21,7 @@ public class Repuesto {
 	private String descripcion;
 	private double precio;
 
-	@OneToMany(mappedBy="repuesto")
+	@OneToMany(mappedBy = "repuesto")
 	private Set<Sustitucion> sustituciones = new HashSet<Sustitucion>();
 
 	Repuesto() {

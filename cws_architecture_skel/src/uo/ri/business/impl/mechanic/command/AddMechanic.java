@@ -1,7 +1,8 @@
 package uo.ri.business.impl.mechanic.command;
 
-import alb.util.exception.NotYetImplementedException;
 import uo.ri.business.dto.MechanicDto;
+import uo.ri.business.exception.BusinessCheck;
+import uo.ri.business.exception.BusinessException;
 import uo.ri.business.impl.Command;
 import uo.ri.business.impl.util.EntityAssembler;
 import uo.ri.business.repository.MecanicoRepository;
@@ -17,7 +18,7 @@ public class AddMechanic implements Command<Void> {
 		this.dto = mecanico;
 	}
 
-	public Void execute() {
+	public Void execute() throws BusinessException {
 		checkDNINotRepeated(dto.dni);
 		Mecanico m = EntityAssembler.toEntity(dto);// mapeo de dto a Entity
 		repo.add(m);
@@ -25,8 +26,9 @@ public class AddMechanic implements Command<Void> {
 		return null;
 	}
 
-	private void checkDNINotRepeated(String dni) {
-		throw new NotYetImplementedException("Implementa el checkeo de DNI vago.");
+	private void checkDNINotRepeated(String dni) throws BusinessException {
+		boolean isRepeated = repo.findAll().parallelStream().anyMatch((mechanic) -> mechanic.getDni().equals(dto.dni));
+		BusinessCheck.isFalse(isRepeated, "There is already a mechanic with that DNI.");
 
 	}
 

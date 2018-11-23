@@ -9,8 +9,12 @@ public class MechanicJpaRepository extends BaseRepository<Mecanico> implements M
 
 	@Override
 	public Mecanico findByDni(String dni) {
-		return Jpa.getManager().createNamedQuery("Mecanico.findByDni", Mecanico.class).setParameter(1, dni)
-				.getResultList().stream().findFirst().orElse(null);
+		return Jpa.getManager().createNamedQuery("Mecanico.findByDni", Mecanico.class)
+				.setParameter(1, dni)
+				.getResultList()
+				.stream()
+				.findFirst()
+				.orElse(null);
 		// creo la consulta externalizada, le pongo el parametro, consigo una lista, la
 		// paso a stream, recojo el primer elemento, si no exite devuelve null
 	}

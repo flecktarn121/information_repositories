@@ -11,25 +11,33 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 @Entity
-@Table(name="TVEHICULOS")
+@Table(name = "TVEHICULOS")
 public class Vehiculo {
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)private Long id;
-	@Column(unique = true) private String marca;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@Column(unique = true)
+	private String marca;
 	private String matricula;
 	private String modelo;
 
-	@Column(name="NUM_AVERIAS")private int numAverias = 0;
+	@Column(name = "NUM_AVERIAS")
+	private int numAverias = 0;
 
-	@ManyToOne private Cliente cliente;
+	@ManyToOne
+	private Cliente cliente;
 
-	@ManyToOne private TipoVehiculo tipo;
-	@OneToMany(mappedBy="vehiculo") private Set<Averia> averias = new HashSet<Averia>();
+	@ManyToOne
+	private TipoVehiculo tipo;
+	@OneToMany(mappedBy = "vehiculo")
+	private Set<Averia> averias = new HashSet<Averia>();
 
-	 Vehiculo() {
-		
+	Vehiculo() {
+
 	}
-	
+
 	public Vehiculo(String matricula) {
 		this.matricula = matricula;
 	}

@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TMEDIOSPAGO")
+@Table(name = "TMEDIOSPAGO")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class MedioPago {
 
@@ -24,7 +24,7 @@ public abstract class MedioPago {
 	protected double acumulado = 0.0;
 	@ManyToOne
 	protected Cliente cliente;
-	@OneToMany(mappedBy="medioPago")
+	@OneToMany(mappedBy = "medioPago")
 	private Set<Cargo> cargos = new HashSet<Cargo>();
 
 	public void pagar(double importe) {

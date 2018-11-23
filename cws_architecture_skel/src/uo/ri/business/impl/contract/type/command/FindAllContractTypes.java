@@ -15,7 +15,6 @@ public class FindAllContractTypes implements Command<List<ContractTypeDto>> {
 
 	@Override
 	public List<ContractTypeDto> execute() throws BusinessException {
-
 		return DtoAssembler.toContractTypeDtoList(repo.findAll());
 	}
 

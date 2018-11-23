@@ -17,12 +17,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import alb.util.date.Dates;
 import uo.ri.model.types.ContractStatus;
 
 @Entity
-@Table(name="TCONTRATOS")
+@Table(name = "TCONTRATOS")
 public class Contract {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,13 +32,14 @@ public class Contract {
 	private Date startDate;
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
-	@Column(name="basesalary")
+	@Column(name = "basesalary")
 	private double baseSalaryPerYear;
 	private double compensation;
 	@Enumerated(EnumType.STRING)
 	private ContractStatus status;
 	@ManyToOne
 	private Mecanico mechanic;
+	@Transient
 	private double irpf;
 	@OneToMany(mappedBy = "contract")
 	private Set<Payroll> payrolls = new HashSet<Payroll>();
@@ -47,9 +49,9 @@ public class Contract {
 	private ContractType type;
 
 	public Contract() {
-	
+
 	}
-	
+
 	public Contract(Mecanico mechanic, Date startDate2, double baseSalary) {
 		this.setDate(startDate2);
 		this.setSalary(baseSalary);
@@ -150,15 +152,8 @@ public class Contract {
 		this.mechanic = m;
 	}
 
-	@Override
-	public String toString() {
-		return "Contract [startDate=" + startDate + ", endDate=" + endDate + ", baseSalaryPerYear=" + baseSalaryPerYear
-				+ ", compensation=" + compensation + ", status=" + status + ", mechanic=" + mechanic + ", payrolls="
-				+ payrolls + ", category=" + category + ", type=" + type + "]";
-	}
-
 	public void markAsFinished(Date endDate2) {
-		if (this.status.equals(ContractStatus.FINISHED)) {
+		if (this.status.equals(ContractStatus.EXTINCT)) {
 			throw new IllegalStateException("The contract is already finished.");
 		}
 		if (endDate2.before(this.startDate)) {
@@ -168,13 +163,13 @@ public class Contract {
 		Date date = Dates.lastDayOfMonth(endDate2);
 
 		this.endDate = date;
-		this.status = ContractStatus.FINISHED;
+		this.status = ContractStatus.EXTINCT;
 
 	}
 
 	public boolean isFinished() {
 
-		return this.status.equals(ContractStatus.FINISHED);
+		return this.status.equals(ContractStatus.EXTINCT);
 	}
 
 	public ContractType getContractType() {

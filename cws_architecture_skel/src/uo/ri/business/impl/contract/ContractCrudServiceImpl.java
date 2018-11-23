@@ -11,37 +11,31 @@ public class ContractCrudServiceImpl implements ContractCrudService {
 
 	@Override
 	public void addContract(ContractDto c) throws BusinessException {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void updateContract(ContractDto dto) throws BusinessException {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void deleteContract(Long id) throws BusinessException {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void finishContract(Long id, Date endDate) throws BusinessException {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public ContractDto findContractById(Long id) throws BusinessException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<ContractDto> findContractsByMechanicId(Long id) throws BusinessException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

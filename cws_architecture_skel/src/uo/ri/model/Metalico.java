@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TMETALICOS")
+@Table(name = "TMETALICOS")
 public class Metalico extends MedioPago {
 
 	Metalico() {

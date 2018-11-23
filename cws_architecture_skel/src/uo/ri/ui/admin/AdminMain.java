@@ -7,9 +7,14 @@ import uo.ri.conf.Factory;
 import uo.ri.persistence.jpa.JpaRepositoryFactory;
 import uo.ri.persistence.jpa.executor.JpaExecutorFactory;
 import uo.ri.persistence.jpa.util.Jpa;
+import uo.ri.ui.admin.contract.ContratosMenu;
+import uo.ri.ui.admin.contractcategory.CategoriasContratoMenu;
+import uo.ri.ui.admin.contracttype.TiposContratoMenu;
 import uo.ri.ui.admin.mechanic.MecanicosMenu;
+import uo.ri.ui.admin.payroll.NominasMenu;
 import uo.ri.ui.admin.repuesto.RepuestosMenu;
 import uo.ri.ui.admin.tipovehiculo.TiposVehiculoMenu;
+import uo.ri.ui.cash.CashMain;
 
 public class AdminMain {
 
@@ -18,9 +23,14 @@ public class AdminMain {
 			menuOptions = new Object[][] { 
 				{ "Administrador", null },
 				
-				{ "Gestión de mecánicos", 			MecanicosMenu.class },
-				{ "Gestión de repuestos", 			RepuestosMenu.class },
-				{ "Gestión de tipos de vehículo", 	TiposVehiculoMenu.class }, 
+				{ "Gestion de mecanicos", 			MecanicosMenu.class },
+				{ "Gestion de contratos", 			ContratosMenu.class },
+				{ "Gestion de tipos de contrato", 	TiposContratoMenu.class },
+				{ "Gestion de categorias de contrato", CategoriasContratoMenu.class },
+				{ "Gestion de nominas", 			NominasMenu.class },
+				{ "Gestion de Facturas", 			CashMain.class },
+				{ "Gestion de repuestos", 			RepuestosMenu.class },
+				{ "Gestion de tipos de vehi�culo", 	TiposVehiculoMenu.class }, 
 			};
 		}
 	}

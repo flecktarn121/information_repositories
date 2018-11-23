@@ -20,7 +20,6 @@ public class UpdateMechanic implements Command<Void> {
 	public Void execute() throws BusinessException {
 		Mecanico m = repor.findById(dto.id);
 		BusinessCheck.isNotNull(m, "No existe.");
-		//TODO: actualizarlo
 		return null;
 	}
 
