@@ -48,7 +48,7 @@ public class Contract {
 	@ManyToOne
 	private ContractType type;
 
-	public Contract() {
+	Contract() {
 
 	}
 

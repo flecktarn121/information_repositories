@@ -23,7 +23,7 @@ public class ContractType {
 	@OneToMany(mappedBy = "type")
 	private Set<Contract> contracts = new HashSet<Contract>();
 
-	public ContractType() {
+	ContractType() {
 	}
 
 	public ContractType(String name, int compensationDays) {

@@ -38,7 +38,7 @@ public class Payroll {
 	private Contract contract;
 	private double totalOfInterventions;
 
-	public Payroll() {
+	Payroll() {
 
 	}
 

@@ -25,7 +25,7 @@ public class ContractCategory {
 	@OneToMany(mappedBy = "category")
 	private Set<Contract> contracts = new HashSet<Contract>();
 
-	public ContractCategory() {
+	ContractCategory() {
 
 	}
 
