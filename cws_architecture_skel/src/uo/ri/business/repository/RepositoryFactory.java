@@ -19,5 +19,9 @@ public interface RepositoryFactory {
 	ContractTypeRepository forContractTpe();
 
 	PayrollRepository forPayroll();
+	
+	ContractCategoryRepository forContractCategory();
+	
+	ContractRepository forContract();
 
 }

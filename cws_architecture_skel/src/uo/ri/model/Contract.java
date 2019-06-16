@@ -86,7 +86,7 @@ public class Contract {
 		return new Date(startDate.getTime());
 	}
 
-	private void setSalary(double salary) {
+	public void setSalary(double salary) {
 		if (salary < 0) {
 			throw new IllegalArgumentException("The salary cannot be negative.");
 		}
@@ -119,7 +119,6 @@ public class Contract {
 	public ContractStatus getStatus() {
 		return status;
 	}
-
 	public Mecanico getMechanic() {
 		return mechanic;
 	}

@@ -2,6 +2,8 @@ package uo.ri.persistence.jpa;
 
 import uo.ri.business.repository.AveriaRepository;
 import uo.ri.business.repository.ClienteRepository;
+import uo.ri.business.repository.ContractCategoryRepository;
+import uo.ri.business.repository.ContractRepository;
 import uo.ri.business.repository.ContractTypeRepository;
 import uo.ri.business.repository.FacturaRepository;
 import uo.ri.business.repository.IntervencionRepository;
@@ -56,6 +58,16 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	@Override
 	public PayrollRepository forPayroll() {
 		return new PayrollJpaRepository();
+	}
+
+	@Override
+	public ContractCategoryRepository forContractCategory() {		
+		return new ContractCategoryJpaRepository();
+	}
+
+	@Override
+	public ContractRepository forContract() {
+		return new ContractJpaRepository();
 	}
 
 }

@@ -8,6 +8,7 @@ import uo.ri.business.dto.BreakdownDto;
 import uo.ri.business.dto.CardDto;
 import uo.ri.business.dto.CashDto;
 import uo.ri.business.dto.ClientDto;
+import uo.ri.business.dto.ContractDto;
 import uo.ri.business.dto.ContractTypeDto;
 import uo.ri.business.dto.InvoiceDto;
 import uo.ri.business.dto.MechanicDto;
@@ -17,6 +18,7 @@ import uo.ri.business.dto.VoucherDto;
 import uo.ri.model.Averia;
 import uo.ri.model.Bono;
 import uo.ri.model.Cliente;
+import uo.ri.model.Contract;
 import uo.ri.model.ContractType;
 import uo.ri.model.Factura;
 import uo.ri.model.Mecanico;
@@ -153,7 +155,9 @@ public class DtoAssembler {
 	}
 
 	public static List<ContractTypeDto> toContractTypeDtoList(List<ContractType> list) {
-		return list.parallelStream().map((type) -> toDto(type)).collect(Collectors.toList());
+		return list.parallelStream()
+				.map((type) -> toDto(type))
+				.collect(Collectors.toList());
 	}
 
 	public static PayrollDto toDto(Payroll p) {
@@ -173,7 +177,27 @@ public class DtoAssembler {
 	}
 	
 	public static List<PayrollDto> toPayrollDtoList(List<Payroll> list) {
-		return list.parallelStream().map((payroll) -> toDto(payroll)).collect(Collectors.toList());
+		return list.parallelStream()
+				.map((payroll) -> toDto(payroll))
+				.collect(Collectors.toList());
+	}
+	
+	public static ContractDto toCOntractDto(Contract contract) {
+		ContractDto dto = new ContractDto();
+		dto.startDate = contract.getStartDate();
+		dto.yearBaseSalary = contract.getBaseSalaryPerYear();
+		dto.endDate = contract.getEndDate();
+		dto.compensation = contract.getCompensation();
+		dto.status = contract.getStatus().toString();
+		dto.mechanicId = contract.getMechanic().getId();
+		dto.typeId = contract.getType().getId();
+		return dto;
+	}
+	
+	public static List<ContractDto> toContractDtoList(List<Contract> list){
+		return list.parallelStream()
+				.map(contract-> toCOntractDto(contract))
+				.collect(Collectors.toList());
 	}
 
 }
