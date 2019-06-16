@@ -29,14 +29,15 @@ public class GeneratePayrolls implements Command<Integer> {
 			Contract con = mechanic.getActiveContract();
 			if (con != null) {
 				Date date = Dates.lastDayOfMonth(Dates.subMonths(new Date(), 1));
-				if (con.getStatus().equals(ContractStatus.ACTIVE) || (Dates.isSameMonth(con.getEndDate(), date))) {
-					double totalInterventions = con.getMechanic().getIntervenciones().stream()
-							.map(Intervencion::getImporte)
-							.reduce(0.0, (a, b) -> a + b);
-					Payroll payroll = new Payroll(con, new Date(), totalInterventions);
-					pRepo.add(payroll);
-					Association.Percibir.link(con, payroll);
-					counter.incrementAndGet();
+				if (!Dates.isSameMonth(date, con.getLastPayroll().getDate())) {
+					if (con.getStatus().equals(ContractStatus.ACTIVE) || (Dates.isSameMonth(con.getEndDate(), date))) {
+						double totalInterventions = con.getMechanic().getIntervenciones().stream()
+								.map(Intervencion::getImporte).reduce(0.0, (a, b) -> a + b);
+						Payroll payroll = new Payroll(con, new Date(), totalInterventions);
+						pRepo.add(payroll);
+						Association.Percibir.link(con, payroll);
+						counter.incrementAndGet();
+					}
 				}
 			}
 		}

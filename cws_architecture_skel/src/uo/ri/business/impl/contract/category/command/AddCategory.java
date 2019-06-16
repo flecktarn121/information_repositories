@@ -13,13 +13,15 @@ public class AddCategory implements Command<Void> {
 
 	private ContractCategoryDto dto;
 	private ContractCategoryRepository repo = Factory.repository.forContractCategory();
-	
+
 	public AddCategory(ContractCategoryDto dto) {
 		this.dto = dto;
 	}
-	
+
 	@Override
 	public Void execute() throws BusinessException {
+		BusinessCheck.isFalse(dto.productivityPlus < 0 || dto.trieniumSalary < 0,
+				"No se pueden introducir valores negativos.");
 		ContractCategory category = EntityAssembler.toEntity(dto);
 		checkIsRepeated(category);
 		repo.add(category);
@@ -29,7 +31,7 @@ public class AddCategory implements Command<Void> {
 	private void checkIsRepeated(ContractCategory category) throws BusinessException {
 		boolean isRepeated = repo.findAll().parallelStream().anyMatch(cat -> cat.equals(category));
 		BusinessCheck.isFalse(isRepeated, "Ya existe una categoría de estas características.");
-		
+
 	}
 
 }

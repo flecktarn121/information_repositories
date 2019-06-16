@@ -1,6 +1,7 @@
 package uo.ri.business.impl.mechanic.command;
 
 import uo.ri.business.dto.MechanicDto;
+import uo.ri.business.exception.BusinessCheck;
 import uo.ri.business.exception.BusinessException;
 import uo.ri.business.impl.Command;
 import uo.ri.business.impl.util.DtoAssembler;
@@ -18,6 +19,7 @@ public class FindMechanicById implements Command<MechanicDto> {
 
 	public MechanicDto execute() throws BusinessException {
 		Mecanico m = repor.findById(id);
+		BusinessCheck.isNotNull(m, "No existe el mecánico con el id " + id);
 		return DtoAssembler.toDto(m);
 	}
 

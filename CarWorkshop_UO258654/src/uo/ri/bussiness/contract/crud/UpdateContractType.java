@@ -1,13 +1,18 @@
 package uo.ri.bussiness.contract.crud;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
+import alb.util.jdbc.Jdbc;
 import uo.ri.bussiness.BusinessException;
 import uo.ri.bussiness.dto.ContractTypeDto;
 import uo.ri.configuration.PersistenceFactory;
+import uo.ri.persistencia.ContractTypecrudGateway;
 
 public class UpdateContractType {
-	ContractTypeDto dto;
+	private ContractTypeDto dto;
+	private ContractTypecrudGateway gateway = PersistenceFactory.getContractTypeCrudGateway();
+	private Connection connection;
 
 	public UpdateContractType(ContractTypeDto dto) {
 		this.dto = dto;
@@ -15,10 +20,14 @@ public class UpdateContractType {
 
 	public void execute() throws BusinessException {
 		try {
-			PersistenceFactory.getContractTypeCrudGateway().update(dto);
+			connection = Jdbc.getConnection();
+			gateway.setConnection(connection);
+			gateway.update(dto);
 		} catch (SQLException e) {
 
 			throw new BusinessException("No ha sido posible actualizar el tipo de contrato.");
+		} finally {
+			Jdbc.close(connection);
 		}
 	}
 }

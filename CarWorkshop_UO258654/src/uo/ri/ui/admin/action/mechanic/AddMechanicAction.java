@@ -1,4 +1,4 @@
-package uo.ri.ui.admin.action;
+package uo.ri.ui.admin.action.mechanic;
 
 import alb.util.console.Console;
 import alb.util.console.Printer;
@@ -7,24 +7,24 @@ import uo.ri.bussiness.BusinessException;
 import uo.ri.bussiness.dto.MechanicDTO;
 import uo.ri.configuration.ServicesFactory;
 
-public class UpdateMechanicAction implements Action {
+public class AddMechanicAction implements Action {
 
 	@Override
 	public void execute() {
 		try {
 			// Pedir datos
-			Long id = Console.readLong("Id del mecánico");
+			String dni = Console.readString("Dni");
 			String nombre = Console.readString("Nombre");
 			String apellidos = Console.readString("Apellidos");
 			MechanicDTO dto = new MechanicDTO();
-			dto.id = id;
+			dto.dni = dni;
 			dto.name = nombre;
 			dto.surname = apellidos;
 			// Procesar
-			ServicesFactory.getMechanicService().updateMechanic(dto);
+			ServicesFactory.getMechanicService().addMechanic(dto);
 
 			// Mostrar resultado
-			Printer.print("Mecánico actualizado");
+			Printer.print("Nuevo mecánico añadido");
 		} catch (BusinessException e) {
 			Printer.printBusinessException(e);
 		}

@@ -64,6 +64,10 @@ public class Contract {
 		this(mechanic2, startDate2, baseSalary);
 		this.endDate = endDate2;
 	}
+	
+	public Long getId() {
+		return id;
+	}
 
 	private void calculatreIrpf(double baseSalary) {
 		if (baseSalary < 12000) {
@@ -101,6 +105,9 @@ public class Contract {
 	}
 
 	public Date getEndDate() {
+		if(endDate == null) {
+			return null;
+		}
 		return new Date(endDate.getTime());
 	}
 

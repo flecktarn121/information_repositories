@@ -18,7 +18,7 @@ public class FindActiveMechanics implements Command<List<MechanicDto>> {
 	public List<MechanicDto> execute() throws BusinessException {
 		List<Mecanico> mecanicos = repo.findAll();
 		mecanicos = mecanicos.parallelStream()
-				.filter((mechanic) -> mechanic.getActiveContract() != null)
+				.filter((mechanic) -> mechanic.getActiveContract() != null && !mechanic.getActiveContract().isFinished())
 				.collect(Collectors.toList());
 		return DtoAssembler.toMechanicDtoList(mecanicos);
 	}

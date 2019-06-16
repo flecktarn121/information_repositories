@@ -40,9 +40,8 @@ public class DeleteContract implements Command<Void> {
 
 	private void checkPayrolls(Contract contract, Date startDate, Date endDate) throws BusinessException {
 		for (Payroll payroll : contract.getPayrolls()) {
-			boolean duringContract = Dates.isAfter(payroll.getDate(), startDate)
-					&& Dates.isBefore(payroll.getDate(), endDate);
-			BusinessCheck.isTrue(duringContract,
+			boolean duringContract = Dates.isDateInWindow(payroll.getDate(), startDate, endDate);
+			BusinessCheck.isFalse(duringContract,
 					"No se puede borrar un contrato que ha tenido nóminas durante su vigencia.");
 		}
 	}
@@ -50,9 +49,9 @@ public class DeleteContract implements Command<Void> {
 	private void checkInterventions(Contract contract, Date startDate, Date endDate) throws BusinessException {
 		for (Intervencion intervencion : contract.getMechanic().getIntervenciones()) {
 			Date interventionDate = intervencion.getAveria().getFecha();
-			boolean duringContract = Dates.isAfter(interventionDate, startDate)
-					&& Dates.isBefore(interventionDate, endDate);
-			BusinessCheck.isTrue(duringContract,
+			boolean duringContract = Dates.isDateInWindow(interventionDate, startDate, endDate);
+			
+			BusinessCheck.isFalse(duringContract,
 					"No se puede borrar un contrato cuando ha tenido intervenciones durante su vigencia.");
 		}
 	}

@@ -19,6 +19,8 @@ public class UpdateCategory implements Command<Void> {
 
 	@Override
 	public Void execute() throws BusinessException {
+		BusinessCheck.isFalse(dto.productivityPlus < 0 || dto.trieniumSalary < 0,
+				"No se pueden introducir valores negativos.");
 		ContractCategory category = repo.findById(dto.id);
 		BusinessCheck.isNotNull(category, "LA categoría con id " + dto.id + " no existe.");
 		return null;

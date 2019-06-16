@@ -34,6 +34,10 @@ public class ContractCategory {
 		this.trienniumSalary = trienniumSalary;
 		this.productivityPlus = productivityPlus;
 	}
+	
+	public Long getId() {
+		return id;
+	}
 
 	public String getName() {
 		return name;

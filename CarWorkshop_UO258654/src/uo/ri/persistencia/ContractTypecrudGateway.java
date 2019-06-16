@@ -1,5 +1,6 @@
 package uo.ri.persistencia;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -13,4 +14,6 @@ public interface ContractTypecrudGateway {
 	public int sumNumberOfWorkers(String name) throws SQLException;
 	public void delete(String name) throws SQLException;
 	public void update(ContractTypeDto dto) throws SQLException;
+	public ContractTypeDto read(String name);
+	void setConnection(Connection connection);
 }

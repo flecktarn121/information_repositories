@@ -1,4 +1,4 @@
-package uo.ri.ui.payrolls;
+package uo.ri.ui.admin.action.payroll;
 
 import alb.util.console.Console;
 import alb.util.console.Printer;

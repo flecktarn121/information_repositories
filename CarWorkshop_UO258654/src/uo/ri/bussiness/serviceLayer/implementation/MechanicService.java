@@ -27,7 +27,7 @@ public class MechanicService implements IMechanicService {
 	@Override
 	public void updateMechanic(MechanicDTO dto) throws BusinessException {
 		try {
-			new UpdateMechanic(dto.name, dto.surname, dto.id);
+			new UpdateMechanic(dto.name, dto.surname, dto.id).execute();
 		} catch (PersistanceException e) {
 			throw new BusinessException(e.getMessage());
 		}
@@ -36,7 +36,7 @@ public class MechanicService implements IMechanicService {
 	@Override
 	public void deleteMechanic(MechanicDTO dto) throws BusinessException {
 		try {
-			new DeleteMechanic(dto.id);
+			new DeleteMechanic(dto.id).execute();
 		} catch (PersistanceException e) {
 			throw new BusinessException(e.getMessage());
 		}

@@ -1,25 +1,29 @@
-package uo.ri.ui.contract.type.action;
+package uo.ri.ui.admin.action.type;
 
 import alb.util.console.Console;
 import alb.util.console.Printer;
 import alb.util.menu.Action;
 import uo.ri.bussiness.BusinessException;
 import uo.ri.bussiness.dto.ContractTypeDto;
-import uo.ri.bussiness.serviceLayer.implementation.ContractTypeCrudService;
+import uo.ri.configuration.ServicesFactory;
 
-public class DeleteContractTypeAction implements Action {
+public class AddContractTypeAction implements Action {
+
 	@Override
 	public void execute() {
 		try {
 			String name = Console.readString("Nombre");
+			int numDays = Console.readInt("Dias de compensacion por año");
 			ContractTypeDto dto = new ContractTypeDto();
 			dto.name = name;
-			new ContractTypeCrudService().deleteContractType(dto);
+			dto.compensationDays = numDays;
+			ServicesFactory.getContractTypeCrudService().addContractType(dto);
 
-			Printer.print("Tipo de contrato borrado.");
+			Printer.print("Nuevo tipo de contrato añadido");
 		} catch (BusinessException e) {
 			Printer.printBusinessException(e);
 		}
 
 	}
+
 }

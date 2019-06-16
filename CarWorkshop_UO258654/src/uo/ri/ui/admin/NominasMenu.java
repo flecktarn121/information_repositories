@@ -1,12 +1,12 @@
 package uo.ri.ui.admin;
 
 import alb.util.menu.BaseMenu;
-import uo.ri.ui.payrolls.CheckPayrollAction;
-import uo.ri.ui.payrolls.CheckPayrollByMechanic;
-import uo.ri.ui.payrolls.DeleteLastMonthPayrolls;
-import uo.ri.ui.payrolls.DeleteOnePayrollAction;
-import uo.ri.ui.payrolls.GeneratePayrollsAction;
-import uo.ri.ui.payrolls.ListAllPayrollsAction;
+import uo.ri.ui.admin.action.payroll.CheckPayrollAction;
+import uo.ri.ui.admin.action.payroll.CheckPayrollByMechanic;
+import uo.ri.ui.admin.action.payroll.DeleteLastMonthPayrolls;
+import uo.ri.ui.admin.action.payroll.DeleteOnePayrollAction;
+import uo.ri.ui.admin.action.payroll.GeneratePayrollsAction;
+import uo.ri.ui.admin.action.payroll.ListAllPayrollsAction;
 
 public class NominasMenu extends BaseMenu {
 

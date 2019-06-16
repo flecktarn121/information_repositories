@@ -8,6 +8,7 @@ import uo.ri.business.dto.BreakdownDto;
 import uo.ri.business.dto.CardDto;
 import uo.ri.business.dto.CashDto;
 import uo.ri.business.dto.ClientDto;
+import uo.ri.business.dto.ContractCategoryDto;
 import uo.ri.business.dto.ContractDto;
 import uo.ri.business.dto.ContractTypeDto;
 import uo.ri.business.dto.InvoiceDto;
@@ -19,6 +20,7 @@ import uo.ri.model.Averia;
 import uo.ri.model.Bono;
 import uo.ri.model.Cliente;
 import uo.ri.model.Contract;
+import uo.ri.model.ContractCategory;
 import uo.ri.model.ContractType;
 import uo.ri.model.Factura;
 import uo.ri.model.Mecanico;
@@ -115,7 +117,9 @@ public class DtoAssembler {
 	}
 
 	public static List<PaymentMeanDto> toPaymentMeanDtoList(List<MedioPago> list) {
-		return list.stream().map(mp -> toDto(mp)).collect(Collectors.toList());
+		return list.stream()
+				.map(mp -> toDto(mp))
+				.collect(Collectors.toList());
 	}
 
 	private static PaymentMeanDto toDto(MedioPago mp) {
@@ -131,7 +135,9 @@ public class DtoAssembler {
 	}
 
 	public static List<BreakdownDto> toBreakdownDtoList(List<Averia> list) {
-		return list.stream().map(a -> toDto(a)).collect(Collectors.toList());
+		return list.stream()
+				.map(a -> toDto(a))
+				.collect(Collectors.toList());
 	}
 
 	public static BreakdownDto toDto(Averia a) {
@@ -175,15 +181,19 @@ public class DtoAssembler {
 		dto.triennium = p.getTriennium();
 		return dto;
 	}
-	
+
 	public static List<PayrollDto> toPayrollDtoList(List<Payroll> list) {
 		return list.parallelStream()
 				.map((payroll) -> toDto(payroll))
 				.collect(Collectors.toList());
 	}
-	
+
 	public static ContractDto toCOntractDto(Contract contract) {
 		ContractDto dto = new ContractDto();
+		dto.id = contract.getId();
+		dto.dni =contract.getMechanic().getDni();
+		dto.categoryName = contract.getCategory().getName();
+		dto.typeName = contract.getType().getName();
 		dto.startDate = contract.getStartDate();
 		dto.yearBaseSalary = contract.getBaseSalaryPerYear();
 		dto.endDate = contract.getEndDate();
@@ -193,10 +203,25 @@ public class DtoAssembler {
 		dto.typeId = contract.getType().getId();
 		return dto;
 	}
-	
-	public static List<ContractDto> toContractDtoList(List<Contract> list){
+
+	public static List<ContractDto> toContractDtoList(List<Contract> list) {
 		return list.parallelStream()
-				.map(contract-> toCOntractDto(contract))
+				.map(contract -> toCOntractDto(contract))
+				.collect(Collectors.toList());
+	}
+
+	public static ContractCategoryDto toDto(ContractCategory category) {
+		ContractCategoryDto dto = new ContractCategoryDto();
+		dto.id = category.getId();
+		dto.name = category.getName();
+		dto.productivityPlus = category.getProductivityPlus();
+		dto.trieniumSalary = category.getTrienniumSalary();
+		return dto;
+	}
+	
+	public static List<ContractCategoryDto> toDtoList(List<ContractCategory> list){
+		return list.parallelStream()
+				.map(category -> toDto(category))
 				.collect(Collectors.toList());
 	}
 

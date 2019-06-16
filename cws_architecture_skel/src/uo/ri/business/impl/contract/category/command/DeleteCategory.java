@@ -24,6 +24,7 @@ public class DeleteCategory implements Command<Void> {
 	public Void execute() throws BusinessException {
 		ContractCategory category = repo.findById(id); //can be null
 		checkCanBeDeleted(category);
+		repo.remove(category);
 		return null;
 	}
 
@@ -31,7 +32,7 @@ public class DeleteCategory implements Command<Void> {
 
 	private void checkCanBeDeleted(ContractCategory category) throws BusinessException {
 		BusinessCheck.isNotNull(category, "La categoría con id "+id+ " no existe.");
-		BusinessCheck.isFalse(category.getContracts().isEmpty(), "No se puede borrar la categoría, aún tiene contratos asignados.");
+		BusinessCheck.isTrue(category.getContracts().isEmpty(), "No se puede borrar la categoría, aún tiene contratos asignados.");
 	}
 
 }
