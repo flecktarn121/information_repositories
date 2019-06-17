@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import alb.util.jdbc.Jdbc;
@@ -144,6 +145,26 @@ public class BreakdownGatewayImpl implements BreakdownGateway {
 			Jdbc.close(pst);
 		}
 		return importe;
+	}
+
+	@Override
+	public List<BreakdownDTO> getBreakdownsByMechanic(Long mechanicId) {
+		List<BreakdownDTO> breakdowns = new ArrayList<BreakdownDTO>();
+		try(PreparedStatement ps = connection.prepareStatement(conf.getProperty("SQL_GET_BREAKDOWNS_BY_MECHANIC"))){
+			ps.setLong(1, mechanicId);
+			
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				BreakdownDTO dto = new BreakdownDTO();
+				 dto.description = rs.getString(1);
+				 dto.date = new java.util.Date(rs.getDate(2).getTime());
+				 dto.ammount = rs.getDouble(3);
+				 breakdowns.add(dto);
+			}
+		}catch (SQLException e) {
+			
+		}
+		return breakdowns;
 	}
 
 }

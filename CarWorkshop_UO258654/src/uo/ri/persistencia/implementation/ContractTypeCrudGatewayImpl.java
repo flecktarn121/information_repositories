@@ -132,6 +132,7 @@ public class ContractTypeCrudGatewayImpl implements ContractTypecrudGateway {
 				compensationDays = rs.getInt(2);
 				dto.name = typeName;
 				dto.compensationDays = compensationDays;
+				dto.id = rs.getLong(3);
 			}
 			return dto;
 		} catch (SQLException e) {

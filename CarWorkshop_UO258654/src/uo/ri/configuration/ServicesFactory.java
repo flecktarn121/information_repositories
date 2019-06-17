@@ -1,10 +1,12 @@
 package uo.ri.configuration;
 
 import uo.ri.bussiness.serviceLayer.ContractCategoryService;
+import uo.ri.bussiness.serviceLayer.ContractCrudService;
 import uo.ri.bussiness.serviceLayer.ContractTypeCrudService;
 import uo.ri.bussiness.serviceLayer.IInvoiceService;
 import uo.ri.bussiness.serviceLayer.IMechanicService;
 import uo.ri.bussiness.serviceLayer.PayrollService;
+import uo.ri.bussiness.serviceLayer.implementation.COntractCrudServiceImpl;
 import uo.ri.bussiness.serviceLayer.implementation.ContractCategoryServiceImpl;
 import uo.ri.bussiness.serviceLayer.implementation.InvoiceService;
 import uo.ri.bussiness.serviceLayer.implementation.MechanicService;
@@ -28,5 +30,9 @@ public class ServicesFactory {
 	
 	public static ContractCategoryService getCategoryService() {
 		return new ContractCategoryServiceImpl();
+	}
+	
+	public static ContractCrudService getContractCrudService() {
+		return new COntractCrudServiceImpl();
 	}
 }

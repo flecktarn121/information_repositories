@@ -136,6 +136,7 @@ public class CategoryGatewayImp implements CategoryGateway {
 				dto.name = catName;
 				dto.trieniumSalary = trieniumSalary;
 				dto.productivityPlus = prodPlus;
+				dto.id = rs.getLong(4);
 			}
 			return dto;
 		} catch (SQLException e) {

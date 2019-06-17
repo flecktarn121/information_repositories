@@ -2,12 +2,14 @@ package uo.ri.configuration;
 
 import uo.ri.persistencia.BreakdownGateway;
 import uo.ri.persistencia.CategoryGateway;
+import uo.ri.persistencia.ContractCrudGateway;
 import uo.ri.persistencia.ContractTypecrudGateway;
 import uo.ri.persistencia.InvoiceGateway;
 import uo.ri.persistencia.MechanicGateway;
 import uo.ri.persistencia.PayrollGateway;
 import uo.ri.persistencia.implementation.BreakdownGatewayImpl;
 import uo.ri.persistencia.implementation.CategoryGatewayImp;
+import uo.ri.persistencia.implementation.ContractCrudGatewayImpl;
 import uo.ri.persistencia.implementation.ContractTypeCrudGatewayImpl;
 import uo.ri.persistencia.implementation.InvoiceGatewayImpl;
 import uo.ri.persistencia.implementation.MechanicGatewayImpl;
@@ -36,5 +38,9 @@ public class PersistenceFactory {
 	
 	public static CategoryGateway getCategoryGateway() {
 		return new CategoryGatewayImp();
+	}
+	
+	public static ContractCrudGateway getContractCrudGateway() {
+		return new ContractCrudGatewayImpl();
 	}
 }

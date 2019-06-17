@@ -15,12 +15,12 @@ import uo.ri.persistencia.MechanicGateway;
 import uo.ri.persistencia.PersistanceException;
 
 public class MechanicGatewayImpl implements MechanicGateway {
-	Configuration config = Configuration.getInstance();
+	private Configuration config = Configuration.getInstance();
+	private Connection c;
 
 	@Override
 	public void create(MechanicDTO dto) {
-		try (Connection c = Jdbc.getConnection();
-				PreparedStatement pst = c.prepareStatement(config.getProperty("SQL_INSERT_MECANICO"));) {
+		try (PreparedStatement pst = c.prepareStatement(config.getProperty("SQL_INSERT_MECANICO"));) {
 
 			pst.setString(1, dto.dni);
 			pst.setString(2, dto.name);
@@ -39,8 +39,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
 	public List<MechanicDTO> read() {
 		List<MechanicDTO> mechanics = new ArrayList<MechanicDTO>();
 		MechanicDTO mechanic;
-		try (Connection c = Jdbc.getConnection();
-				PreparedStatement pst = c.prepareStatement(config.getProperty("SQL_LISTAR_MECANICOS"));
+		try (PreparedStatement pst = c.prepareStatement(config.getProperty("SQL_LISTAR_MECANICOS"));
 				ResultSet rs = pst.executeQuery();) {
 
 			while (rs.next()) {
@@ -62,8 +61,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
 		if (dto.name == null || dto.surname == null) {
 			throw new IllegalArgumentException("name and surname must be non null");
 		}
-		try (Connection c = Jdbc.getConnection();
-				PreparedStatement pst = c.prepareStatement(config.getProperty("SQL_UPDATE_MECANICO"));) {
+		try (PreparedStatement pst = c.prepareStatement(config.getProperty("SQL_UPDATE_MECANICO"));) {
 
 			pst.setString(1, dto.name);
 			pst.setString(2, dto.surname);
@@ -82,8 +80,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
 
 	@Override
 	public void delete(MechanicDTO dto) {
-		try (Connection c = Jdbc.getConnection();
-				PreparedStatement pst = c.prepareStatement(config.getProperty("SQL_DELETE_MECANICOS"));) {
+		try (PreparedStatement pst = c.prepareStatement(config.getProperty("SQL_DELETE_MECANICOS"));) {
 			pst.setLong(1, dto.id);
 
 			int result = pst.executeUpdate();
@@ -101,8 +98,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
 	public List<MechanicDTO> readAll() {
 		List<MechanicDTO> mechanics = new ArrayList<MechanicDTO>();
 		MechanicDTO mechanic;
-		try (Connection c = Jdbc.getConnection();
-				PreparedStatement pst = c.prepareStatement(config.getProperty("SQL_LISTAR_TODOS_MECANICOS"));
+		try (PreparedStatement pst = c.prepareStatement(config.getProperty("SQL_LISTAR_TODOS_MECANICOS"));
 				ResultSet rs = pst.executeQuery();) {
 
 			while (rs.next()) {
@@ -117,6 +113,12 @@ public class MechanicGatewayImpl implements MechanicGateway {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public void setConnection(Connection connection) {
+		this.c = connection;
+
 	}
 
 }

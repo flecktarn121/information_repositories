@@ -1,4 +1,4 @@
-package uo.ri.bussiness.contract.crud;
+package uo.ri.bussiness.contract.type;
 
 import java.sql.Connection;
 import java.sql.SQLException;

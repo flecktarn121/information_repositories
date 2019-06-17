@@ -22,7 +22,6 @@ import uo.ri.model.types.AveriaStatus;
 @Entity
 @Table(name = "TAVERIAS", uniqueConstraints = { @UniqueConstraint(columnNames = { "VEHICULO_ID", "FECHA" }) })
 public class Averia {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -231,6 +230,38 @@ public class Averia {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((fecha == null) ? 0 : fecha.hashCode());
+		result = prime * result + ((vehiculo == null) ? 0 : vehiculo.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Averia other = (Averia) obj;
+		if (fecha == null) {
+			if (other.fecha != null)
+				return false;
+		} else if (!fecha.equals(other.fecha))
+			return false;
+		if (vehiculo == null) {
+			if (other.vehiculo != null)
+				return false;
+		} else if (!vehiculo.equals(other.vehiculo))
+			return false;
+		return true;
 	}
 
 }

@@ -1,12 +1,24 @@
 package uo.ri.bussiness.mechanic;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
+import alb.util.jdbc.Jdbc;
 import uo.ri.bussiness.dto.MechanicDTO;
 import uo.ri.configuration.PersistenceFactory;
 
 public class ListMechanic {
+	private Connection connection;
+
 	public List<MechanicDTO> execute() {
-		return PersistenceFactory.getMechanicGateway().read();
+		try {
+			connection = Jdbc.getConnection();
+			return PersistenceFactory.getMechanicGateway().read();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			Jdbc.close(connection);
+		}
 	}
 }

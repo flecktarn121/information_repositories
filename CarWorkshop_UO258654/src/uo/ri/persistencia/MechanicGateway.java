@@ -1,5 +1,6 @@
 package uo.ri.persistencia;
 
+import java.sql.Connection;
 import java.util.List;
 
 import uo.ri.bussiness.dto.MechanicDTO;
@@ -39,4 +40,6 @@ public interface MechanicGateway {
 	 * DO NOT @throws PersistanceException
 	 */
 	List<MechanicDTO> readAll();
+	
+	void setConnection(Connection connection);
 }

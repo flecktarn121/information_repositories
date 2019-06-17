@@ -1,10 +1,10 @@
 package uo.ri.bussiness.serviceLayer.implementation;
 
 import uo.ri.bussiness.BusinessException;
-import uo.ri.bussiness.contract.crud.AddContractType;
-import uo.ri.bussiness.contract.crud.DeleteContractType;
-import uo.ri.bussiness.contract.crud.ListMechanicsByContractType;
-import uo.ri.bussiness.contract.crud.UpdateContractType;
+import uo.ri.bussiness.contract.type.AddContractType;
+import uo.ri.bussiness.contract.type.DeleteContractType;
+import uo.ri.bussiness.contract.type.ListMechanicsByContractType;
+import uo.ri.bussiness.contract.type.UpdateContractType;
 import uo.ri.bussiness.dto.ContractTypeDto;
 import uo.ri.persistencia.PersistanceException;
 

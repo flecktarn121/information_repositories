@@ -8,9 +8,9 @@ public class MainMenu extends BaseMenu {
 		menuOptions = new Object[][] { { "Administrador", null }, { "Gestión de mecánicos", MecanicosMenu.class },
 				{ "Gestión de repuestos", RepuestosMenu.class },
 				{ "Gestión de tipos de vehículo", TiposVehiculoMenu.class },
-				{ "Gestion de tipos de contrato", TiposContrato.class },
-				{"Gestión de categorías de contrato", CategoriasContrato.class},
-				{ "Gestión de nóminas", NominasMenu.class }};
+				{ "Gestión de contratos", Contratos.class }, { "Gestion de tipos de contrato", TiposContrato.class },
+				{ "Gestión de categorías de contrato", CategoriasContrato.class },
+				{ "Gestión de nóminas", NominasMenu.class } };
 	}
 
 	public static void main(String[] args) {

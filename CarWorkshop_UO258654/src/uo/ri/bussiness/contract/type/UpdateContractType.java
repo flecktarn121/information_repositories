@@ -1,4 +1,4 @@
-package uo.ri.bussiness.contract.crud;
+package uo.ri.bussiness.contract.type;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -9,28 +9,23 @@ import uo.ri.bussiness.dto.ContractTypeDto;
 import uo.ri.configuration.PersistenceFactory;
 import uo.ri.persistencia.ContractTypecrudGateway;
 
-public class DeleteContractType {
-	private Connection connection;
-	private String name;
+public class UpdateContractType {
+	private ContractTypeDto dto;
 	private ContractTypecrudGateway gateway = PersistenceFactory.getContractTypeCrudGateway();
+	private Connection connection;
 
-	public DeleteContractType(ContractTypeDto dto) {
-		this.name = dto.name;
+	public UpdateContractType(ContractTypeDto dto) {
+		this.dto = dto;
 	}
 
 	public void execute() throws BusinessException {
 		try {
 			connection = Jdbc.getConnection();
 			gateway.setConnection(connection);
-			if (gateway.read(name) == null) {
-				throw new BusinessException("No existe un tipo de contrato con el nombre " + name);
-			}
-			if(!gateway.list(name).isEmpty()) {
-				throw new BusinessException("Aún existen contratos activos del tipo " + name);
-			}
-			gateway.delete(name);
+			gateway.update(dto);
 		} catch (SQLException e) {
-			throw new BusinessException("No ha sido posible borrar el tipo de contrato.");
+
+			throw new BusinessException("No ha sido posible actualizar el tipo de contrato.");
 		} finally {
 			Jdbc.close(connection);
 		}

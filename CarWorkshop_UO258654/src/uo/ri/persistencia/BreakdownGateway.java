@@ -24,4 +24,6 @@ public interface BreakdownGateway {
 	 * @return la suma del importe de esas averias
 	 */
 	public double getImportePorMecanicoYFecha(Long mechanicId, Date date);
+	
+	public List<BreakdownDTO> getBreakdownsByMechanic(Long mechanicId);
 }
